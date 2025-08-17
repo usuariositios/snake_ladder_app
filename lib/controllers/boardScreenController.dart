@@ -19,7 +19,7 @@ class Boardscreencontroller extends GetxController {
   double celdaAnc = 0;
   Ficha? ficha1 ;
   double nroCelda = 0;
-  final List<String> imagePathsList = [
+  final List<String> imagePathsList = [//imagenes dice
     'assets/images/dice/dice1.png',
     'assets/images/dice/dice2.png',
     'assets/images/dice/dice3.png',
@@ -57,6 +57,7 @@ class Boardscreencontroller extends GetxController {
   int posPreguntaFicha = 0;
   Rx<String> preguntaFicha = "".obs;
   final AudioPlayer audioPlayer = AudioPlayer();//para sonidos
+  int numFicha = 0;//para el array de fichas 0 = jugador 1
 
 
 
@@ -93,11 +94,11 @@ class Boardscreencontroller extends GetxController {
       }
       mapPosCeldas[0] = mapPosCeldas[1]!;//copiamos la posicion de celda 1 a la posicion de celda 0 para iniciar los sprites en posicion celda 1 para que salte a posicion celda 1
     }
-    void moverFicha_action(){
+    /*void moverFicha_action(){
       nroCelda ++;
       Get.find<Snakeladdergame>().moverFichaAPosicion(mapPosCeldas[nroCelda]!.dx,mapPosCeldas[nroCelda]!.dy);
       
-    }
+    }*/
 
     void lanzar_action() async{
       await audioPlayer.play(AssetSource('sounds/dice-sound.mp3'));
@@ -116,8 +117,8 @@ class Boardscreencontroller extends GetxController {
           print('numTurnoDice.value ${numTurnoDice.value}');
           posDestinoList = [];//resetear la lista de posiciones destino
           int  i=0;//variable para actualizar la posicion del dialogo
-          for(i=Get.find<Snakeladdergame>().ficha.nroCeldaActual+1;
-          i<=Get.find<Snakeladdergame>().ficha.nroCeldaActual+numTurnoDice.value;// mas el numero que toco en el dice
+          for(i=Get.find<Snakeladdergame>().fichaList[numFicha].nroCeldaActual+1;
+          i<=Get.find<Snakeladdergame>().fichaList[numFicha].nroCeldaActual+numTurnoDice.value;// mas el numero que toco en el dice
           i++){//empieza del nroCeldaActual de la ficha
             posDestinoList.add(mapPosCeldas[i]!);
           }
@@ -125,8 +126,8 @@ class Boardscreencontroller extends GetxController {
           //un delay
           Future.delayed(const Duration(seconds: 1), () {//despues de 1 segundo se hara el salto de la ficha
             // Code to be executed after 2 seconds
-            Get.find<Snakeladdergame>().saltarFichaAPosiciones(posDestinoList);//saltar las posiciones registradas            
-            Get.find<Snakeladdergame>().ficha.nroCeldaActual+=numTurnoDice.value;//actualizamos la posicion actual de la ficha
+            Get.find<Snakeladdergame>().saltarFichaAPosiciones(posDestinoList,numFicha);//saltar las posiciones registradas            
+            Get.find<Snakeladdergame>().fichaList[numFicha].nroCeldaActual+=numTurnoDice.value;//actualizamos la posicion actual de la ficha - se actualiza el valor en la ficha del array
             
 
             
@@ -144,27 +145,29 @@ class Boardscreencontroller extends GetxController {
       //actualizar el valor del dice
 
             posDestinoList =[];
-            posDestinoList = crearSaltosEscalera(Get.find<Snakeladdergame>().ficha.nroCeldaActual); //calculamos si coincide con la escalera posIni
-            curvSerpDestino = crearCurvasSerpiente(Get.find<Snakeladdergame>().ficha.nroCeldaActual);
+            posDestinoList = crearSaltosEscalera(Get.find<Snakeladdergame>().fichaList[numFicha].nroCeldaActual); //calculamos si coincide con la escalera posIni
+            curvSerpDestino = crearCurvasSerpiente(Get.find<Snakeladdergame>().fichaList[numFicha].nroCeldaActual);
             //es asincrono por eso debe venir despues de finalizar los saltos
             if(posDestinoList.length>0){//verificamos que se generaron los Offset
-              await Get.find<Snakeladdergame>().saltarFichaPorEscalera(posDestinoList);//saltar las posiciones registradas            
+              await Get.find<Snakeladdergame>().saltarFichaPorEscalera(posDestinoList,numFicha);//saltar las posiciones registradas            
               //Get.find<Snakeladdergame>().ficha.nroCeldaActual+=numTurnoDice.value;//actualizamos la posicion actual de la ficha
               //print("finalizo saltar escalera....");
             }
             else if(curvSerpDestino.computeMetrics().isNotEmpty){//si tiene curvas para la serpiente
-              await Get.find<Snakeladdergame>().bajarFichaPorSerpiente(curvSerpDestino);
+              await Get.find<Snakeladdergame>().bajarFichaPorSerpiente(curvSerpDestino,numFicha);
             }else{
               
               //ya no hay mas que recorrer
               preguntaFicha.value = obtienePreguntaFicha();
               //print(preguntaFicha.length/20);
-              posMsjComic.value = mapPosCeldas[Get.find<Snakeladdergame>().ficha.nroCeldaActual]!;//posicion del comic finalizando la animacion          
+              posMsjComic.value = mapPosCeldas[Get.find<Snakeladdergame>().fichaList[numFicha].nroCeldaActual]!;//posicion del comic finalizando la animacion          
               //posMsjComic.value.dy = posMsjComic.value.dy - (preguntaFicha.length/20);
               //deducir posicion del comic metodo invocado desde el sprite flame game
               print(' posicion ficha dx ${posMsjComic.value.dx} dy ${posMsjComic.value.dy}' );
+              
 
               mensajeComicList.add(preguntaFicha.value);
+              actNumFicha();
             }
             
       
@@ -172,26 +175,34 @@ class Boardscreencontroller extends GetxController {
     }
     void finalizaSaltosEscalera_action(){
         //ya no hay mas que recorrer
-        posMsjComic.value = mapPosCeldas[Get.find<Snakeladdergame>().ficha.nroCeldaActual]!;//posicion del comic finalizando la animacion          
+        posMsjComic.value = mapPosCeldas[Get.find<Snakeladdergame>().fichaList[numFicha].nroCeldaActual]!;//posicion del comic finalizando la animacion (en ficha actual)
         //deducir posicion del comic metodo invocado desde el sprite flame game
         mensajeComicList.add(obtienePreguntaFicha());
+        actNumFicha();
     }
     void finalizarBajarPorSerpiente_action(){
         //ya no hay mas que recorrer
-        posMsjComic.value = mapPosCeldas[Get.find<Snakeladdergame>().ficha.nroCeldaActual]!;//posicion del comic finalizando la animacion          
+        posMsjComic.value = mapPosCeldas[Get.find<Snakeladdergame>().fichaList[numFicha].nroCeldaActual]!;//posicion del comic finalizando la animacion (en ficha actual)
         //deducir posicion del comic metodo invocado desde el sprite flame game
         mensajeComicList.add(obtienePreguntaFicha());
+        actNumFicha();
     }
     String obtienePreguntaFicha(){
       posPreguntaFicha ++;
       return preguntasList[posPreguntaFicha].pregunta!;
+    }
+    void actNumFicha(){
+      numFicha++;
+      if(numFicha>=2){//maximo dos jugadores 0 ,1
+        numFicha=0;
+      }
     }
 
     //deducir si coincide con la posicion inicial para mover a la posicion final
     List<Offset> crearSaltosEscalera(int nroCeldaActual){//con cantidad de offsets a generar
       for(LadderPositions p in posEscalerasList){
         if(p.ubicIni==nroCeldaActual){
-          Get.find<Snakeladdergame>().ficha.nroCeldaActual = p.ubicFin!;//actualizamos la posicion final de la ficha
+          Get.find<Snakeladdergame>().fichaList[numFicha].nroCeldaActual = p.ubicFin!;//actualizamos la posicion final de la ficha
           //generar la serie de pasos hacia p.ubicFin
           return List.generate(
                     p.pasos!,
@@ -205,7 +216,7 @@ class Boardscreencontroller extends GetxController {
     Path crearCurvasSerpiente(int nroCeldaActual){//con cantidad de offsets a generar
       for(SnakePositions p in posSerpientesList){
         if(p.ubicFin==nroCeldaActual){
-          Get.find<Snakeladdergame>().ficha.nroCeldaActual = p.ubicIni!;//actualizamos la posicion final de la ficha
+          Get.find<Snakeladdergame>().fichaList[numFicha].nroCeldaActual = p.ubicIni!;//actualizamos la posicion final de la ficha
           //generar la serie de pasos hacia p.ubicFin
           
           return generarCurvasSerpiente( mapPosCeldas[p.ubicFin]!,mapPosCeldas[p.ubicIni]!);
@@ -232,7 +243,7 @@ class Boardscreencontroller extends GetxController {
 
     @override
       void onClose() {
-        _timerDuracionDice.cancel();
+        //_timerDuracionDice.cancel();
         super.onClose();
       }
     
