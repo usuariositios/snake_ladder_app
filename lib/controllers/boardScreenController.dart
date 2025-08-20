@@ -57,7 +57,7 @@ class Boardscreencontroller extends GetxController {
   int posPreguntaFicha = 0;
   Rx<String> preguntaFicha = "".obs;
   final AudioPlayer audioPlayer = AudioPlayer();//para sonidos
-  int numFicha = 0;//para el array de fichas 0 = jugador 1
+  RxInt numFicha = 0.obs;//para el array de fichas 0 = jugador 1
 
 
 
@@ -117,8 +117,8 @@ class Boardscreencontroller extends GetxController {
           print('numTurnoDice.value ${numTurnoDice.value}');
           posDestinoList = [];//resetear la lista de posiciones destino
           int  i=0;//variable para actualizar la posicion del dialogo
-          for(i=Get.find<Snakeladdergame>().fichaList[numFicha].nroCeldaActual+1;
-          i<=Get.find<Snakeladdergame>().fichaList[numFicha].nroCeldaActual+numTurnoDice.value;// mas el numero que toco en el dice
+          for(i=Get.find<Snakeladdergame>().fichaList[numFicha.value].nroCeldaActual+1;
+          i<=Get.find<Snakeladdergame>().fichaList[numFicha.value].nroCeldaActual+numTurnoDice.value;// mas el numero que toco en el dice
           i++){//empieza del nroCeldaActual de la ficha
             posDestinoList.add(mapPosCeldas[i]!);
           }
@@ -126,8 +126,8 @@ class Boardscreencontroller extends GetxController {
           //un delay
           Future.delayed(const Duration(seconds: 1), () {//despues de 1 segundo se hara el salto de la ficha
             // Code to be executed after 2 seconds
-            Get.find<Snakeladdergame>().saltarFichaAPosiciones(posDestinoList,numFicha);//saltar las posiciones registradas            
-            Get.find<Snakeladdergame>().fichaList[numFicha].nroCeldaActual+=numTurnoDice.value;//actualizamos la posicion actual de la ficha - se actualiza el valor en la ficha del array
+            Get.find<Snakeladdergame>().saltarFichaAPosiciones(posDestinoList,numFicha.value);//saltar las posiciones registradas            
+            Get.find<Snakeladdergame>().fichaList[numFicha.value].nroCeldaActual+=numTurnoDice.value;//actualizamos la posicion actual de la ficha - se actualiza el valor en la ficha del array
             
 
             
@@ -145,22 +145,22 @@ class Boardscreencontroller extends GetxController {
       //actualizar el valor del dice
 
             posDestinoList =[];
-            posDestinoList = crearSaltosEscalera(Get.find<Snakeladdergame>().fichaList[numFicha].nroCeldaActual); //calculamos si coincide con la escalera posIni
-            curvSerpDestino = crearCurvasSerpiente(Get.find<Snakeladdergame>().fichaList[numFicha].nroCeldaActual);
+            posDestinoList = crearSaltosEscalera(Get.find<Snakeladdergame>().fichaList[numFicha.value].nroCeldaActual); //calculamos si coincide con la escalera posIni
+            curvSerpDestino = crearCurvasSerpiente(Get.find<Snakeladdergame>().fichaList[numFicha.value].nroCeldaActual);
             //es asincrono por eso debe venir despues de finalizar los saltos
             if(posDestinoList.length>0){//verificamos que se generaron los Offset
-              await Get.find<Snakeladdergame>().saltarFichaPorEscalera(posDestinoList,numFicha);//saltar las posiciones registradas            
+              await Get.find<Snakeladdergame>().saltarFichaPorEscalera(posDestinoList,numFicha.value);//saltar las posiciones registradas            
               //Get.find<Snakeladdergame>().ficha.nroCeldaActual+=numTurnoDice.value;//actualizamos la posicion actual de la ficha
               //print("finalizo saltar escalera....");
             }
             else if(curvSerpDestino.computeMetrics().isNotEmpty){//si tiene curvas para la serpiente
-              await Get.find<Snakeladdergame>().bajarFichaPorSerpiente(curvSerpDestino,numFicha);
+              await Get.find<Snakeladdergame>().bajarFichaPorSerpiente(curvSerpDestino,numFicha.value);
             }else{
               
               //ya no hay mas que recorrer
               preguntaFicha.value = obtienePreguntaFicha();
               //print(preguntaFicha.length/20);
-              posMsjComic.value = mapPosCeldas[Get.find<Snakeladdergame>().fichaList[numFicha].nroCeldaActual]!;//posicion del comic finalizando la animacion          
+              posMsjComic.value = mapPosCeldas[Get.find<Snakeladdergame>().fichaList[numFicha.value].nroCeldaActual]!;//posicion del comic finalizando la animacion          
               //posMsjComic.value.dy = posMsjComic.value.dy - (preguntaFicha.length/20);
               //deducir posicion del comic metodo invocado desde el sprite flame game
               print(' posicion ficha dx ${posMsjComic.value.dx} dy ${posMsjComic.value.dy}' );
@@ -175,14 +175,14 @@ class Boardscreencontroller extends GetxController {
     }
     void finalizaSaltosEscalera_action(){
         //ya no hay mas que recorrer
-        posMsjComic.value = mapPosCeldas[Get.find<Snakeladdergame>().fichaList[numFicha].nroCeldaActual]!;//posicion del comic finalizando la animacion (en ficha actual)
+        posMsjComic.value = mapPosCeldas[Get.find<Snakeladdergame>().fichaList[numFicha.value].nroCeldaActual]!;//posicion del comic finalizando la animacion (en ficha actual)
         //deducir posicion del comic metodo invocado desde el sprite flame game
         mensajeComicList.add(obtienePreguntaFicha());
         actNumFicha();
     }
     void finalizarBajarPorSerpiente_action(){
         //ya no hay mas que recorrer
-        posMsjComic.value = mapPosCeldas[Get.find<Snakeladdergame>().fichaList[numFicha].nroCeldaActual]!;//posicion del comic finalizando la animacion (en ficha actual)
+        posMsjComic.value = mapPosCeldas[Get.find<Snakeladdergame>().fichaList[numFicha.value].nroCeldaActual]!;//posicion del comic finalizando la animacion (en ficha actual)
         //deducir posicion del comic metodo invocado desde el sprite flame game
         mensajeComicList.add(obtienePreguntaFicha());
         actNumFicha();
@@ -194,7 +194,7 @@ class Boardscreencontroller extends GetxController {
     void actNumFicha(){
       numFicha++;
       if(numFicha>=2){//maximo dos jugadores 0 ,1
-        numFicha=0;
+        numFicha.value=0;
       }
     }
 
@@ -202,7 +202,7 @@ class Boardscreencontroller extends GetxController {
     List<Offset> crearSaltosEscalera(int nroCeldaActual){//con cantidad de offsets a generar
       for(LadderPositions p in posEscalerasList){
         if(p.ubicIni==nroCeldaActual){
-          Get.find<Snakeladdergame>().fichaList[numFicha].nroCeldaActual = p.ubicFin!;//actualizamos la posicion final de la ficha
+          Get.find<Snakeladdergame>().fichaList[numFicha.value].nroCeldaActual = p.ubicFin!;//actualizamos la posicion final de la ficha
           //generar la serie de pasos hacia p.ubicFin
           return List.generate(
                     p.pasos!,
@@ -216,7 +216,7 @@ class Boardscreencontroller extends GetxController {
     Path crearCurvasSerpiente(int nroCeldaActual){//con cantidad de offsets a generar
       for(SnakePositions p in posSerpientesList){
         if(p.ubicFin==nroCeldaActual){
-          Get.find<Snakeladdergame>().fichaList[numFicha].nroCeldaActual = p.ubicIni!;//actualizamos la posicion final de la ficha
+          Get.find<Snakeladdergame>().fichaList[numFicha.value].nroCeldaActual = p.ubicIni!;//actualizamos la posicion final de la ficha
           //generar la serie de pasos hacia p.ubicFin
           
           return generarCurvasSerpiente( mapPosCeldas[p.ubicFin]!,mapPosCeldas[p.ubicIni]!);

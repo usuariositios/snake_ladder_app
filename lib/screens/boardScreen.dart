@@ -5,6 +5,7 @@ import 'package:snake_ladder_app/controllers/boardScreenController.dart';
 import 'package:snake_ladder_app/game/snakeLadderGame.dart';
 import 'package:flame/game.dart';
 import 'package:snake_ladder_app/widgets/mensaje_comic.dart';
+import 'package:snake_ladder_app/widgets/rebotaImage.dart';
 
 class BoardScreen extends StatelessWidget {
   final boardController = Get.put(Boardscreencontroller());
@@ -84,42 +85,132 @@ class BoardScreen extends StatelessWidget {
           }),
           Positioned(
             top: screenAlt-screenAlt*0.11,
-            left: (screenAnc-100)/2,
-            child:
-            GestureDetector(
-              onTap: (){
-                boardController.lanzar_action();
-              },
-              child:
-              Obx(() =>
-              Stack(
-                alignment: Alignment.center, 
-                children: [
-                
-                Image.asset(
-                  boardController.imagePathsList[boardController.indiceDice.value],
-                  width: 100,
-                  height: 100,
-                  opacity: boardController.numTurnoDice>0?AlwaysStoppedAnimation(0.0):AlwaysStoppedAnimation(100),
-                  
-                ),
-                
-                Image.asset(
-                  boardController.imageDiceList[boardController.numTurnoDice.value],
-                  width: 70,
-                  height: 70,
-                  opacity: boardController.numTurnoDice>0?AlwaysStoppedAnimation(100):AlwaysStoppedAnimation(0.0),
-                ),
-                
+            //left: (screenAnc-100)/2,//al centro horizontal
+            child://aqui el dice al centro y los jugadores
+            Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround, // Alinea los widgets en la fila
+                  children: <Widget>[
+                    SizedBox(
+                      width: screenAnc*0.40,
+                      child:
+                      Obx(() =>
+                          Card(
+                              color:Colors.white,//si no es numero su numero se coloca negro
+                              elevation: 5, // Sombra del card
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(7.0),
+                                side: BorderSide(color: Colors.black, width: 1.0), // Borde
+                              ),                        
+                              child: 
+                              Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                    child:
+                              Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: <Widget>[
+                                  
+                                  
+                                    RebotaImage(
+                                        assetPath: 'assets/images/user.png',
+                                        size: screenAnc *0.1,
+                                        play: boardController.numFicha.value==0? true:false, // control desde afuera
+                                        tag:'foto0'
+                                      ),
+                                    
+                                    SizedBox(width: screenAnc*0.01,),                                                                    
+                                     Text(
+                                      'Jugador 1',
+                                      style: TextStyle(fontSize: 20,                                         
+                                        color: Colors.black),
+                                    ),
+                                  
+                                  
+                                ],
+                              ),
+                              ),              
+                              
+                            ),
+                            )
+                          ),
+                      GestureDetector(
+                        onTap: (){
+                          boardController.lanzar_action();
+                        },
+                        child:
+                        Obx(() =>
+                        Stack(
+                          alignment: Alignment.center, 
+                          children: [
+                          
+                          Image.asset(
+                            boardController.imagePathsList[boardController.indiceDice.value],
+                            width: 100,
+                            height: 100,
+                            opacity: boardController.numTurnoDice>0?AlwaysStoppedAnimation(0.0):AlwaysStoppedAnimation(100),
+                            
+                          ),
+                          
+                          Image.asset(
+                            boardController.imageDiceList[boardController.numTurnoDice.value],
+                            width: 70,
+                            height: 70,
+                            opacity: boardController.numTurnoDice>0?AlwaysStoppedAnimation(100):AlwaysStoppedAnimation(0.0),
+                          ),
+                          
 
-              ],
+                        ],
 
-              )
-              
-              )
-            )
+                        )
+                        
+                        )
+                      ),
+                      SizedBox(
+                      width: screenAnc*0.40,
+                      child:
+                      Obx(() =>
+                          Card(
+                              color: Colors.white,//si no es numero su numero se coloca negro
+                              elevation: 2, // Sombra del card
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(7.0),
+                                side: BorderSide(color: Colors.black, width: 1.0), // Borde
+                              ),                        
+                              child: 
+                              Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                    child:
+                              Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: <Widget>[
+                                  
+                                  
+                                    RebotaImage(
+                                        assetPath: 'assets/images/user.png',
+                                        size: screenAnc *0.1,
+                                        play: boardController.numFicha.value==1? true:false, // control desde afuera
+                                        tag:'foto1'
+                                      ),
+                                    SizedBox(width: screenAnc*0.01,),                                                                    
+                                     Text(
+                                      'Jugador 2',
+                                      style: TextStyle(fontSize: 20,                                         
+                                        color: Colors.black),
+                                    ),
+                                  
+                                  
+                                ],
+                              ),
+                              ),              
+                              
+                            ),
+                            )
+                          ),
+
+            ]
+        )
 
           ),
+        
 
           
         ],
