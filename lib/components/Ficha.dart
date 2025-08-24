@@ -12,6 +12,9 @@ class Ficha extends SpriteComponent {
     required Sprite sprite,
   }) : super(position: position, size: size, sprite: sprite);
 int nroCeldaActual=0;//celda actual en 0 para que salte a 1
+String nombre="";
+
+
 
 
 void saltar(Vector2 destino) {//aqui recibir el array de 

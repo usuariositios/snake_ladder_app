@@ -26,7 +26,8 @@ class BoardScreen extends StatelessWidget {
     Get.put(sgame);
     print("entro build BoardScreen");
     //Get.find<Snakeladdergame>().iniciaFichas(boardController.mapPosCeldas[1]!.dx, boardController.mapPosCeldas[1]!.dy) ;
-
+    boardController.sgame = sgame;//asignamos al controlador
+    //boardController.iniciarNombresFichas();
     
     
 
@@ -96,14 +97,14 @@ class BoardScreen extends StatelessWidget {
                       Obx(() =>
                           Card(
                               color:Colors.white,//si no es numero su numero se coloca negro
-                              elevation: 5, // Sombra del card
+                              elevation: 1, // Sombra del card
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(7.0),
-                                side: BorderSide(color: Colors.black, width: 1.0), // Borde
+                                side: BorderSide(color: Colors.black, width: 1.5), // Borde
                               ),                        
                               child: 
                               Padding(
-                                padding: const EdgeInsets.all(20.0),
+                                padding: EdgeInsets.all(20.0),
                                     child:
                               Row(
                                 mainAxisSize: MainAxisSize.max,
@@ -111,15 +112,15 @@ class BoardScreen extends StatelessWidget {
                                   
                                   
                                     RebotaImage(
-                                        assetPath: 'assets/images/user.png',
+                                        assetPath: boardController.numFicha.value==0||boardController.numFicha.value==2?'assets/images/turno_user.png':'assets/images/user.png',
                                         size: screenAnc *0.1,
-                                        play: boardController.numFicha.value==0? true:false, // control desde afuera
+                                        play: boardController.numFicha.value==0||boardController.numFicha.value==2? true:false, // control desde afuera
                                         tag:'foto0'
                                       ),
                                     
                                     SizedBox(width: screenAnc*0.01,),                                                                    
                                      Text(
-                                      'Jugador 1',
+                                      boardController.nombreFicha0.value,
                                       style: TextStyle(fontSize: 20,                                         
                                         color: Colors.black),
                                     ),
@@ -144,16 +145,16 @@ class BoardScreen extends StatelessWidget {
                           
                           Image.asset(
                             boardController.imagePathsList[boardController.indiceDice.value],
-                            width: 100,
-                            height: 100,
+                            width: screenAnc *0.2,
+                            height: screenAnc *0.2,
                             opacity: boardController.numTurnoDice>0?AlwaysStoppedAnimation(0.0):AlwaysStoppedAnimation(100),
                             
                           ),
                           
                           Image.asset(
                             boardController.imageDiceList[boardController.numTurnoDice.value],
-                            width: 70,
-                            height: 70,
+                            width: screenAnc *0.14,
+                            height: screenAnc *0.14,
                             opacity: boardController.numTurnoDice>0?AlwaysStoppedAnimation(100):AlwaysStoppedAnimation(0.0),
                           ),
                           
@@ -170,36 +171,36 @@ class BoardScreen extends StatelessWidget {
                       Obx(() =>
                           Card(
                               color: Colors.white,//si no es numero su numero se coloca negro
-                              elevation: 2, // Sombra del card
+                              elevation: 0, // Sombra del card
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(7.0),
-                                side: BorderSide(color: Colors.black, width: 1.0), // Borde
+                                side: BorderSide(color: Colors.black, width: 1.5), // Borde
                               ),                        
                               child: 
+                              
                               Padding(
-                                padding: const EdgeInsets.all(20.0),
+                                padding: EdgeInsets.all(20.0),
                                     child:
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: <Widget>[
-                                  
-                                  
-                                    RebotaImage(
-                                        assetPath: 'assets/images/user.png',
-                                        size: screenAnc *0.1,
-                                        play: boardController.numFicha.value==1? true:false, // control desde afuera
-                                        tag:'foto1'
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: <Widget>[
+                                            
+                                            RebotaImage(
+                                                assetPath: boardController.numFicha.value==1 || boardController.numFicha.value==3?'assets/images/turno_user.png':'assets/images/user.png',
+                                                size: screenAnc *0.1,
+                                                play: boardController.numFicha.value==1 || boardController.numFicha.value==3? true:false, // control desde afuera
+                                                tag:'foto1'
+                                              ),
+                                            SizedBox(width: screenAnc*0.01,),                                                                    
+                                            Text(
+                                              boardController.nombreFicha1.value,
+                                              style: TextStyle(fontSize: 20,                                         
+                                                color: Colors.black),
+                                            ),
+                                          
+                                          
+                                        ],
                                       ),
-                                    SizedBox(width: screenAnc*0.01,),                                                                    
-                                     Text(
-                                      'Jugador 2',
-                                      style: TextStyle(fontSize: 20,                                         
-                                        color: Colors.black),
-                                    ),
-                                  
-                                  
-                                ],
-                              ),
                               ),              
                               
                             ),

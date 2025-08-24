@@ -22,16 +22,27 @@ class Snakeladdergame extends FlameGame {
     print("entro onload Snakeladdergame");
     final bController = Get.find<Boardscreencontroller>();
     fichaList = [Ficha(
-                  position: Vector2(bController.mapPosCeldas[0]!.dx, bController.mapPosCeldas[0]!.dy),
+                  position: Vector2(bController.mapPosCeldas[0]!.dx, bController.mapPosCeldas[0]!.dy),//posicion inicial
                   size: Vector2(20, 40),
                   sprite: await loadSprite('player_yellow.png'),
                 ),
                 Ficha(
                   position: Vector2(bController.mapPosCeldas[0]!.dx, bController.mapPosCeldas[0]!.dy),
                   size: Vector2(20, 40),
-                  sprite: await loadSprite('player_blue.png'),
+                  sprite: await loadSprite('player_blue.png'),                  
+                ),
+                Ficha(
+                  position: Vector2(bController.mapPosCeldas[0]!.dx, bController.mapPosCeldas[0]!.dy),
+                  size: Vector2(20, 40),
+                  sprite: await loadSprite('player_red.png'),                  
+                ),
+                Ficha(
+                  position: Vector2(bController.mapPosCeldas[0]!.dx, bController.mapPosCeldas[0]!.dy),
+                  size: Vector2(20, 40),
+                  sprite: await loadSprite('player_green.png'),                  
                 )];
-    
+      iniciarFichas();
+      Get.find<Boardscreencontroller>().iniciarNombresFichas();//cuando el juego flame ya esta en memoria
 
     /*ficha = Ficha(
       position: Vector2(bController.mapPosCeldas[0]!.dx, bController.mapPosCeldas[0]!.dy),
@@ -46,6 +57,13 @@ class Snakeladdergame extends FlameGame {
 
     
   }
+  void iniciarFichas(){//iniciar objetos de flame en flame
+    for(int i=0;i<fichaList.length;i++){//asignar nombres por defecto a las fichas      
+      fichaList[i].nombre = 'Jugador${i+1}';
+    }
+    
+  }
+  
    @override
       Color backgroundColor() => Colors.transparent;
   

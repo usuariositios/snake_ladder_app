@@ -24,9 +24,13 @@ class RebotaImageController extends GetxController with GetSingleTickerProviderS
       offsetY.value = animation.value;
     });
 
-    ever(isAnimating, (bool playing) {//controla la animacion
-      if (playing) {
-        animationController.repeat(reverse: true);
+    ever(isAnimating, (bool playing) async {//controla la animacion
+      if (playing) {        
+        animationController.repeat(reverse: true);        
+        Future.delayed(const Duration(seconds: 2), () {
+          animationController.stop();
+          
+        });
       } else {
         animationController.stop();
       }
