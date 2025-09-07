@@ -28,6 +28,33 @@ class BoardScreen extends StatelessWidget {
     //Get.find<Snakeladdergame>().iniciaFichas(boardController.mapPosCeldas[1]!.dx, boardController.mapPosCeldas[1]!.dy) ;
     boardController.sgame = sgame;//asignamos al controlador
     //boardController.iniciarNombresFichas();
+    //aqui setear los valores al controlador board
+    try {
+      
+    
+    final args = Get.arguments as Map<String, dynamic>;
+    boardController.numTotalFichas = args['numJugadores']; //entrega de variables enviadas el widget y guardar al controlador
+    
+    } catch (e) {//puede llegar nulo al screen
+      e.printError();
+      boardController.numTotalFichas=2;
+    }
+    try{
+      final args = Get.arguments as Map<String, dynamic>;
+      boardController.nombresList = args['nombresList'];//tratar de obtener los nombres jugadores
+    }catch(e){//puede llegar nulo al screen
+      e.printError();
+      boardController.nombresList=[//nombres de jugadores
+    'Jugador 1',
+    'Jugador 2',
+    'Jugador 3',
+    'Jugador 4'
+        ];
+
+      }
+
+
+    
     
     
 
@@ -104,25 +131,32 @@ class BoardScreen extends StatelessWidget {
                               ),                        
                               child: 
                               Padding(
-                                padding: EdgeInsets.all(20.0),
+                                padding: EdgeInsets.only(left: screenAnc *0.01,
+                                          right: screenAnc *0.01,
+                                          top: screenAnc *0.05,
+                                          bottom: screenAnc *0.05,),
                                     child:
                               Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: <Widget>[
                                   
-                                  
+                                  boardController.loadingImage.value == false?
                                     RebotaImage(
-                                        assetPath: boardController.numFicha.value==0||boardController.numFicha.value==2?'assets/images/turno_user.png':'assets/images/user.png',
+                                        assetPath: 'assets/images/${boardController.pathFicha0.value}',
                                         size: screenAnc *0.1,
-                                        play: boardController.numFicha.value==0||boardController.numFicha.value==2? true:false, // control desde afuera
+                                        play: (boardController.numFicha.value==0 || boardController.numFicha.value==2)? true:false, // control desde afuera
                                         tag:'foto0'
-                                      ),
+                                      ):CircularProgressIndicator(),
                                     
                                     SizedBox(width: screenAnc*0.01,),                                                                    
-                                     Text(
+                                     Expanded(                                                                    
+                                            child:Text(
                                       boardController.nombreFicha0.value,
                                       style: TextStyle(fontSize: 20,                                         
                                         color: Colors.black),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis, // ...
+                                    ),
                                     ),
                                   
                                   
@@ -179,24 +213,31 @@ class BoardScreen extends StatelessWidget {
                               child: 
                               
                               Padding(
-                                padding: EdgeInsets.all(20.0),
+                                padding: EdgeInsets.only(left: screenAnc *0.01,
+                                          right: screenAnc *0.01,
+                                          top: screenAnc *0.05,
+                                          bottom: screenAnc *0.05,),
                                     child:
                                       Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: <Widget>[
-                                            
+                                            boardController.loadingImage.value == false?
                                             RebotaImage(
-                                                assetPath: boardController.numFicha.value==1 || boardController.numFicha.value==3?'assets/images/turno_user.png':'assets/images/user.png',
+                                                assetPath: 'assets/images/${boardController.pathFicha1.value}',
                                                 size: screenAnc *0.1,
                                                 play: boardController.numFicha.value==1 || boardController.numFicha.value==3? true:false, // control desde afuera
                                                 tag:'foto1'
-                                              ),
-                                            SizedBox(width: screenAnc*0.01,),                                                                    
-                                            Text(
+                                              ):CircularProgressIndicator(),
+
+                                            SizedBox(width: screenAnc*0.01,),
+                                            Expanded(                                                                    
+                                            child:Text(
                                               boardController.nombreFicha1.value,
                                               style: TextStyle(fontSize: 20,                                         
                                                 color: Colors.black),
-                                            ),
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis, // ...
+                                            ),),
                                           
                                           
                                         ],

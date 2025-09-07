@@ -1,10 +1,10 @@
 {
 "1":[
-    {"ubicIni":41,"ubicFin":79,"pasos":4},
-    {"ubicIni":68,"ubicFin":86,"pasos":4},
-    {"ubicIni":34,"ubicFin":65,"pasos":4},
-    {"ubicIni":27,"ubicFin":33,"pasos":3},
-    {"ubicIni":5,"ubicFin":25,"pasos":4}    
+    {"ubicIni":41,"ubicFin":79,"pasos":7},
+    {"ubicIni":68,"ubicFin":86,"pasos":7},
+    {"ubicIni":34,"ubicFin":65,"pasos":7},
+    {"ubicIni":27,"ubicFin":33,"pasos":5},
+    {"ubicIni":5,"ubicFin":25,"pasos":7}    
     ],
 "2":[
     {"ubicIni":22,"ubicFin":3,"pasos":7},

@@ -31,7 +31,8 @@ class RebotaImage extends StatelessWidget {
         offset: Offset(0, controller.offsetY.value),
         child: Image.asset(
           assetPath,
-          width: size,          
+          width: size,
+          height: size,          
         ),
       );
     });

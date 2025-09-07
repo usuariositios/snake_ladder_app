@@ -58,10 +58,19 @@ class Boardscreencontroller extends GetxController {
   Rx<String> preguntaFicha = "".obs;//la pregunta que se mostrara en el dialogo
   final AudioPlayer audioPlayer = AudioPlayer();//para sonidos
   RxInt numFicha = 0.obs;//para el array de fichas 0 = jugador 1 ficha actual
-  int numTotalFichas = 4; //numero de fichas que jugaran
+  int numTotalFichas = 0; //numero de fichas que jugaran 4
   Rx<String> nombreFicha0 ="".obs;//nombre a desplegar en la pantalla
   Rx<String> nombreFicha1 ="".obs;
+  Rx<String> pathFicha0 ="".obs;//nombre a desplegar en la pantalla
+  Rx<String> pathFicha1 ="".obs;
+  var loadingImage = true.obs;//para indicar que esta en loading para imagenes
+  List<String> nombresList=[];//la lista de nombres de los jugadores
+
+
+
+
   late Snakeladdergame sgame;//se asigna cuando ya construye la vista widgets
+  int numFichaBkp = 0;//copia del numero de ficha
 
   
 
@@ -91,9 +100,15 @@ class Boardscreencontroller extends GetxController {
     
     
   }
-  void iniciarNombresFichas(){
+  void iniciarNombresFichas(){//se invoca desde flame game
     nombreFicha0.value = sgame.fichaList[numFicha.value].nombre;
     nombreFicha1.value = sgame.fichaList[numFicha.value+1].nombre;
+
+    pathFicha0.value = sgame.fichaList[numFicha.value].pathImage;
+    pathFicha1.value = sgame.fichaList[numFicha.value+1].pathImage;
+
+    print('paths de imagenes cargadas ${pathFicha0.value}  ${pathFicha1.value} ');
+
 
   }
   
@@ -132,6 +147,7 @@ class Boardscreencontroller extends GetxController {
       _timerDuracionDice = new Timer(const Duration(milliseconds: 700), () {//duracion de la animacion de imagenes
           _timerDice.cancel();//cancelar el rote de imagenes de dice
           numTurnoDice.value = random.nextInt(6)+1; //numero randomico segun formula para el dice
+          //numTurnoDice.value = 1;  // para que incremente de uno en uno
           print('numTurnoDice.value ${numTurnoDice.value}');
           posDestinoList = [];//resetear la lista de posiciones destino
           int  i=0;//variable para actualizar la posicion del dialogo
@@ -144,6 +160,7 @@ class Boardscreencontroller extends GetxController {
           //un delay
           Future.delayed(const Duration(seconds: 1), () {//despues de 1 segundo se hara el salto de la ficha
             // Code to be executed after 2 seconds
+            //sgame.fichaList[numFicha.value].resetSize();//resetear tamaño deberias ser todas las fichas
             sgame.saltarFichaAPosiciones(posDestinoList,numFicha.value);//saltar las posiciones registradas            
             sgame.fichaList[numFicha.value].nroCeldaActual+=numTurnoDice.value;//actualizamos la posicion actual de la ficha - se actualiza el valor en la ficha del array
             
@@ -185,6 +202,8 @@ class Boardscreencontroller extends GetxController {
               
 
               mensajeComicList.add(preguntaFicha.value);
+              
+              rePosicionaFicha();
               actNumFicha();
             }
             
@@ -194,15 +213,19 @@ class Boardscreencontroller extends GetxController {
     void finalizaSaltosEscalera_action(){
         //ya no hay mas que recorrer
         posMsjComic.value = mapPosCeldas[sgame.fichaList[numFicha.value].nroCeldaActual]!;//posicion del comic finalizando la animacion (en ficha actual)
+        
         //deducir posicion del comic metodo invocado desde el sprite flame game
         mensajeComicList.add(obtienePreguntaFicha());
+        rePosicionaFicha();
         actNumFicha();
     }
     void finalizarBajarPorSerpiente_action(){
         //ya no hay mas que recorrer
         posMsjComic.value = mapPosCeldas[sgame.fichaList[numFicha.value].nroCeldaActual]!;//posicion del comic finalizando la animacion (en ficha actual)
+        
         //deducir posicion del comic metodo invocado desde el sprite flame game
         mensajeComicList.add(obtienePreguntaFicha());
+        rePosicionaFicha();
         actNumFicha();
     }
     String obtienePreguntaFicha(){
@@ -210,16 +233,50 @@ class Boardscreencontroller extends GetxController {
       return preguntasList[posPreguntaFicha].pregunta!;
     }
     void actNumFicha(){
-      numFicha++;      
-      if(numFicha>=numTotalFichas){//maximo dos jugadores 0 ,1 2 es una constante
+      
+      
+      numFicha.value++;      
+      
+      if(numFicha.value+1>numTotalFichas){//maximo dos jugadores 0 ,1 2 es una constante es que numFicha comienza de 0
+        
         numFicha.value=0;
-      }
-      if(numFicha.value%2==0){// es par comienza de 0 la ficha actual
-        nombreFicha0.value = sgame.fichaList[numFicha.value].nombre;
-        nombreFicha1.value = sgame.fichaList[numFicha.value+1].nombre;
       }
       
 
+      if(numFicha.value%2==0){// es par comienza de 0 la ficha actual [0, 2]        
+        nombreFicha0.value = sgame.fichaList[numFicha.value].nombre;
+        pathFicha0.value = sgame.fichaList[numFicha.value].pathImage;
+        print('comparacion ${sgame.fichaList.length} ${numFicha.value}');
+        if(sgame.fichaList.length<=numFicha.value+1){//comparar la longitud de la lista con el numero de ficha + 1
+          
+          nombreFicha1.value = sgame.fichaList[0].nombre;//colocar nigun jugador "" 
+          pathFicha1.value = sgame.fichaList[0].pathImage; //"player_none.png" 
+        }else{
+          nombreFicha1.value = sgame.fichaList[numFicha.value+1].nombre;
+          pathFicha1.value = sgame.fichaList[numFicha.value+1].pathImage;
+        }
+      }
+      print('valor de numFicha ${numFicha.value}');
+
+
+      
+
+    }
+    Future<void> rePosicionaFicha() async{//para reducir el tamaño si existen posiciones similares
+    double posFicha = 3*numTotalFichas.toDouble();
+      for(int i = 0;i< sgame.fichaList.length;i++){//no mover a la ficha que tiene el turno
+        if(numFicha.value!=i &&  sgame.fichaList[numFicha.value].nroCeldaActual == sgame.fichaList[i].nroCeldaActual ){//la ficha actual con las fichas y sus posiciones
+          //sgame.fichaList[numFicha.value].resize(0.7);
+          //sgame.fichaList[i].resize(0.7);
+          posFicha -=3;//invertir ya que no se muestra con incremento
+          print('ficha ${i} posicion ${posFicha} ');
+
+          //sgame.fichaList[numFicha.value].rePosiciona(posFicha);//hacia la derecha recorrer la ficha actual todas y reacomodar a las fichas que tienen la misma posicion
+          sgame.fichaList[i].rePosiciona(posFicha);//hacia la derecha recorrer a las fichas que tienen la misma posicion
+
+          //break;
+        }
+      }
     }
 
     //deducir si coincide con la posicion inicial para mover a la posicion final

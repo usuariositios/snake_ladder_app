@@ -6,13 +6,17 @@ import 'package:flutter/animation.dart';
 
 
 class Ficha extends SpriteComponent {
+  int nroCeldaActual=0;//celda actual en 0 para que salte a 1
+  String nombre="";//nombre de jugador
+  String pathImage = "";//colocar luego que se cargue el array
+  int factorSize = 0;//porcentaje para el tamaño de la ficha
+
   Ficha({
     required Vector2 position,
     required Vector2 size,
-    required Sprite sprite,
+    required Sprite sprite,//se guarda la imagen en memoria pero no el path        
   }) : super(position: position, size: size, sprite: sprite);
-int nroCeldaActual=0;//celda actual en 0 para que salte a 1
-String nombre="";
+
 
 
 
@@ -55,6 +59,7 @@ void saltar(Vector2 destino) {//aqui recibir el array de
 
     
   }
+  
 
   Future<void> saltarVariasPosiciones(List<Offset> destinoLists) async {//aqui recibir el array de 
     final double alturaSalto = -100; // altura negativa = hacia arriba
@@ -114,4 +119,18 @@ void saltar(Vector2 destino) {//aqui recibir el array de
   
   await efecto.completed;//esperar a que los efectos terminen
 }
+void resize(double factor) {
+    size *= factor; // reduce o aumenta proporcionalmente
+
+}
+void rePosiciona(double factor) {
+    position.add(Vector2(factor,0));//a la derecha segun factor
+}
+void resetSize(){
+  size = Vector2(20, 40);
+}
+Vector2 getPosition(){
+  return position;
+}
+
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:snake_ladder_app/controllers/menucontroller.dart';
+import 'package:snake_ladder_app/controllers/menuGameController.dart';
 
 
 
@@ -15,7 +15,7 @@ class MenuScreen extends StatefulWidget {
 
 class _MenuScreenState extends State<MenuScreen> {
   //late AppLocalizations t;
-  final mController = Get.put(menuController());
+  final mController = Get.put(MenuGameController());
   
   late bool isDark;
 
@@ -63,7 +63,7 @@ class _MenuScreenState extends State<MenuScreen> {
                           borderRadius: BorderRadius.circular(15),
                         ),),
                       onPressed: () {                        
-                        mController.irboardscreen_action();
+                        mController.irmodosscreen_action();
                       },
                       child: Text(
                         'empezar',
@@ -83,6 +83,7 @@ class _MenuScreenState extends State<MenuScreen> {
                           borderRadius: BorderRadius.circular(15),
                         ),),
                       onPressed: () {
+                        mController.irnombresscreen_action();
                         //controller.ir_jugadorscreen();
                         // Navegar a pantalla de modos de juego
                       },

@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:snake_ladder_app/screens/boardScreen.dart';
 import 'package:snake_ladder_app/screens/menuScreen.dart';
+import 'package:snake_ladder_app/screens/jugadoresScreen.dart';
+import 'package:snake_ladder_app/screens/nombresScreen.dart';
 
 
 void main() async {
@@ -15,6 +17,8 @@ void main() async {
   getPages: [
       GetPage(name: '/', page: () => MenuScreen()),
       GetPage(name: '/board_screen', page: () => BoardScreen()), // tu pantalla del juego      
+      GetPage(name: '/modos_screen', page: () => JugadoresScreen()), // tu pantalla del juego      
+      GetPage(name: '/nombres_screen', page: () => NombresScreen()), // tu pantalla del juego      
     ],
   ));//para que tenga un context);
 }
