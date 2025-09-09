@@ -10,6 +10,7 @@ import 'package:snake_ladder_app/model/preguntas.dart';
 import 'package:snake_ladder_app/service/gameService.dart';
 import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:snake_ladder_app/widgets/opcionesDialog.dart';
 
 
 
@@ -319,6 +320,34 @@ class Boardscreencontroller extends GetxController {
       path.cubicTo(control1.dx, control1.dy, control2.dx, control2.dy, fin.dx, fin.dy);
 
       return path;
+    }
+
+    void mostrarOpciones_action(){
+      Get.dialog(
+        OpcionesDialog(        
+        onMenu: (){
+          numFicha.value = 0;//resetear el numero de ficha
+          mensajeComicList.clear();//borrar los mensajes
+
+          Get.toNamed('/', arguments: {//a la pantalla inicial          
+          });
+        }, 
+        onReintentar:(){
+          //posicionar en 0 los jugadores
+          for(int i = 0;i< sgame.fichaList.length;i++){//no mover a la ficha que tiene el turno                  
+          sgame.fichaList[i].setPosition(mapPosCeldas[0]!.dx,mapPosCeldas[0]!.dy);//hacia la derecha recorrer a las fichas que tienen la misma posicion
+          sgame.fichaList[i].nroCeldaActual = 0;
+          //break;        
+          }
+          Get.back();
+
+        },
+        onRetornar: (){
+          Get.back();
+        }
+
+        )
+      );
     }
 
 

@@ -65,6 +65,7 @@ class BoardScreen extends StatelessWidget {
       body: Stack(
         children: [
           
+          
           // Imagen SVG de fondo
           Positioned.fill(
             
@@ -78,6 +79,7 @@ class BoardScreen extends StatelessWidget {
             ),
             
           ),
+          
           
           // Mostrar las 100 casillas
           GameWidget(game: sgame),
@@ -99,6 +101,20 @@ class BoardScreen extends StatelessWidget {
                 );
               }).toList(),
           
+          //colocar el boton de menu a la esquina derecha
+          Positioned(
+            right: 0,
+            top: screenAlt*0.112,
+            child:
+            Opacity(opacity: 0.5,
+            child: 
+            IconButton(icon: Icon(Icons.pause_circle_outline),
+            iconSize: screenAlt*0.05,
+            onPressed: (){
+              boardController.mostrarOpciones_action();
+            })
+            )
+          ),
           
           Obx(() {
             return Stack(

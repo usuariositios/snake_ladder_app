@@ -132,5 +132,9 @@ void resetSize(){
 Vector2 getPosition(){
   return position;
 }
+void setPosition(double x, double y) {
+    position.x = x;
+    position.y = y;
+}
 
 }
