@@ -1,30 +1,28 @@
 {
-"1":[
+"0":[
     {"ubicIni":41,"ubicFin":79,"pasos":7},
     {"ubicIni":68,"ubicFin":86,"pasos":7},
     {"ubicIni":34,"ubicFin":65,"pasos":7},
     {"ubicIni":27,"ubicFin":33,"pasos":5},
     {"ubicIni":5,"ubicFin":25,"pasos":7}    
     ],
+"1":[
+    {"ubicIni":41,"ubicFin":82,"pasos":7},
+    {"ubicIni":22,"ubicFin":58,"pasos":7},
+    {"ubicIni":4,"ubicFin":56,"pasos":9},
+    {"ubicIni":27,"ubicFin":55,"pasos":7},
+    {"ubicIni":12,"ubicFin":49,"pasos":7},
+    {"ubicIni":54,"ubicFin":88,"pasos":7}    
+    ],
 "2":[
-    {"ubicIni":22,"ubicFin":3,"pasos":7},
-    {"ubicIni":13,"ubicFin":8,"pasos":3},
-    {"ubicIni":27,"ubicFin":11,"pasos":9},
-    {"ubicIni":65,"ubicFin":20,"pasos":21},
-    {"ubicIni":56,"ubicFin":26,"pasos":7},
-    {"ubicIni":59,"ubicFin":40,"pasos":5},
-    {"ubicIni":92,"ubicFin":71,"pasos":5}
+    {"ubicIni":62,"ubicFin":81,"pasos":7},
+    {"ubicIni":74,"ubicFin":96,"pasos":3},
+    {"ubicIni":40,"ubicFin":77,"pasos":9},
+    {"ubicIni":48,"ubicFin":91,"pasos":9},
+    {"ubicIni":34,"ubicFin":66,"pasos":7},
+    {"ubicIni":7,"ubicFin":45,"pasos":7}    
     ],
 "3":[
-    {"ubicIni":38,"ubicFin":2,"pasos":7},
-    {"ubicIni":14,"ubicFin":7,"pasos":3},
-    {"ubicIni":31,"ubicFin":8,"pasos":9},
-    {"ubicIni":26,"ubicFin":15,"pasos":21},
-    {"ubicIni":84,"ubicFin":28,"pasos":7},
-    {"ubicIni":44,"ubicFin":36,"pasos":5},
-    {"ubicIni":67,"ubicFin":51,"pasos":5}
-    ],
-"4":[
     {"ubicIni":25,"ubicFin":4,"pasos":7},
     {"ubicIni":46,"ubicFin":13,"pasos":3},
     {"ubicIni":49,"ubicFin":33,"pasos":9},
@@ -34,7 +32,7 @@
     {"ubicIni":92,"ubicFin":74,"pasos":5}
     ]
 ,
-"5":[
+"4":[
     {"ubicIni":14,"ubicFin":6,"pasos":7},
     {"ubicIni":18,"ubicFin":11,"pasos":3},
     {"ubicIni":21,"ubicFin":17,"pasos":9},
@@ -44,7 +42,7 @@
     {"ubicIni":70,"ubicFin":77,"pasos":5}
     ]
 ,
-"6":[
+"5":[
     {"ubicIni":21,"ubicFin":3,"pasos":7},
     {"ubicIni":30,"ubicFin":8,"pasos":3},
     {"ubicIni":54,"ubicFin":28,"pasos":9},
@@ -54,7 +52,7 @@
     {"ubicIni":91,"ubicFin":71,"pasos":5}
     ]
 ,
-"7":[
+"6":[
     {"ubicIni":15,"ubicFin":2,"pasos":7},
     {"ubicIni":27,"ubicFin":6,"pasos":3},
     {"ubicIni":31,"ubicFin":10,"pasos":9},
@@ -64,7 +62,7 @@
     {"ubicIni":72,"ubicFin":52,"pasos":5}
     ]
 ,
-"8":[
+"7":[
     {"ubicIni":31,"ubicFin":9,"pasos":7},
     {"ubicIni":47,"ubicFin":14,"pasos":3},
     {"ubicIni":42,"ubicFin":21,"pasos":9},

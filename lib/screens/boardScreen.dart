@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:snake_ladder_app/controllers/boardScreenController.dart';
 import 'package:snake_ladder_app/game/snakeLadderGame.dart';
 import 'package:flame/game.dart';
+import 'package:snake_ladder_app/service/gameService.dart';
 import 'package:snake_ladder_app/widgets/mensaje_comic.dart';
 import 'package:snake_ladder_app/widgets/rebotaImage.dart';
 
@@ -29,10 +30,9 @@ class BoardScreen extends StatelessWidget {
     boardController.sgame = sgame;//asignamos al controlador
     //boardController.iniciarNombresFichas();
     //aqui setear los valores al controlador board
-    try {
-      
-    
     final args = Get.arguments as Map<String, dynamic>;
+    try {
+    
     boardController.numTotalFichas = args['numJugadores']; //entrega de variables enviadas el widget y guardar al controlador
     
     } catch (e) {//puede llegar nulo al screen
@@ -40,7 +40,7 @@ class BoardScreen extends StatelessWidget {
       boardController.numTotalFichas=2;
     }
     try{
-      final args = Get.arguments as Map<String, dynamic>;
+      
       boardController.nombresList = args['nombresList'];//tratar de obtener los nombres jugadores
     }catch(e){//puede llegar nulo al screen
       e.printError();
@@ -52,6 +52,16 @@ class BoardScreen extends StatelessWidget {
         ];
 
       }
+
+    try {
+    
+    boardController.numTabla = args['numTabla']; //entrega de variables enviadas el widget y guardar al controlador
+    boardController.cargarPosiciones();//funcion asincrona para cargar posiciones despues de cargar el numero de tabla (la variable ya esta en el controlador)
+    } catch (e) {//puede llegar nulo al screen
+      e.printError();
+      boardController.numTabla=0;
+      boardController.cargarPosiciones();
+    }
 
 
     
@@ -70,7 +80,7 @@ class BoardScreen extends StatelessWidget {
           Positioned.fill(
             
             child: SvgPicture.asset(
-              'assets/images/tabla_snake_ladder.svg', // Asegúrate de tener este archivo en assets
+              'assets/images/tabla_snake_ladder${boardController.numTabla}.svg', // Asegúrate de tener este archivo en assets
             
             fit: BoxFit.fill,//extiende la imagen svg al 100%
 
@@ -101,6 +111,19 @@ class BoardScreen extends StatelessWidget {
                 );
               }).toList(),
           
+          
+          
+          Obx(() {
+            return Stack(
+              children: boardController.mensajeComicList
+                  .map((msg) => MensajeComic(
+                      texto: msg,
+                      offset: Offset(boardController.posMsjComic.value.dx,boardController.posMsjComic.value.dy),//-screenAlt*0.0749
+                      ),
+                      )
+                  .toList(),
+            );
+          }),
           //colocar el boton de menu a la esquina derecha
           Positioned(
             right: 0,
@@ -115,18 +138,6 @@ class BoardScreen extends StatelessWidget {
             })
             )
           ),
-          
-          Obx(() {
-            return Stack(
-              children: boardController.mensajeComicList
-                  .map((msg) => MensajeComic(
-                      texto: msg,
-                      offset: Offset(boardController.posMsjComic.value.dx,boardController.posMsjComic.value.dy),//-screenAlt*0.0749
-                      ),
-                      )
-                  .toList(),
-            );
-          }),
           Positioned(
             top: screenAlt-screenAlt*0.11,
             //left: (screenAnc-100)/2,//al centro horizontal

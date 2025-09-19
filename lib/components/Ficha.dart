@@ -1,8 +1,11 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flutter/animation.dart';
+import 'package:audioplayers/audioplayers.dart';
+
 
 
 class Ficha extends SpriteComponent {
@@ -10,12 +13,15 @@ class Ficha extends SpriteComponent {
   String nombre="";//nombre de jugador
   String pathImage = "";//colocar luego que se cargue el array
   int factorSize = 0;//porcentaje para el tamaño de la ficha
+  double tAcum = 0;
+  final AudioPlayer audioPlayer = AudioPlayer();
 
   Ficha({
     required Vector2 position,
     required Vector2 size,
     required Sprite sprite,//se guarda la imagen en memoria pero no el path        
   }) : super(position: position, size: size, sprite: sprite);
+  
 
 
 
@@ -61,7 +67,7 @@ void saltar(Vector2 destino) {//aqui recibir el array de
   }
   
 
-  Future<void> saltarVariasPosiciones(List<Offset> destinoLists) async {//aqui recibir el array de 
+  Future<void> saltarVariasPosiciones(List<Offset> destinoLists,{double vSubir=0.3, double vBajar=0.4}) async {//aqui recibir el array de 
     final double alturaSalto = -100; // altura negativa = hacia arriba
 
     /*final moveUp = MoveByEffect(
@@ -71,24 +77,36 @@ void saltar(Vector2 destino) {//aqui recibir el array de
     
 
     
-    
+    MoveEffect bajarFicha;
 
     for (final destino in destinoLists) {
+      final AudioPlayer audioPlayer = AudioPlayer();//para que se reproduzca cada sonido de manera independiente
+      
+      bajarFicha = MoveEffect.to(
+            Vector2(destino.dx, destino.dy+80),//para bajar la ficha
+            EffectController(duration: vBajar),
+            onComplete: () async {
+              await audioPlayer.play(AssetSource('sounds/step_land.mp3'));//por el sonido en una variable                            
+            }
+          );
+          
+      
+
       final efectos = [
           MoveEffect.by(
             Vector2(0, -80), // Move 50 pixels up
-            EffectController(duration: 0.3), // Quick jump up
+            EffectController(duration: vSubir), // Quick jump up
           ),
-          MoveEffect.to(
-            Vector2(destino.dx, destino.dy+80),//para bajar la ficha
-            EffectController(duration: 0.4),
-          )
+          bajarFicha
       ];
 
       final futures = efectos.map((e) => e.completed).toList();
 
       addAll(efectos);
       await Future.wait(futures);//esperar a que los efectos terminen
+      
+      
+      
   }
   
 
@@ -110,6 +128,7 @@ void saltar(Vector2 destino) {//aqui recibir el array de
   }
 
   Future<void> moverPorTrayectoria(Path path) async {//mover a travez del path
+    await audioPlayer.play(AssetSource('sounds/serpiente.mp3'));
     final efecto = MoveAlongPathEffect(
       path,
       EffectController(duration: 2.0, curve: Curves.easeInOut), // duración y curva
@@ -136,5 +155,22 @@ void setPosition(double x, double y) {
     position.x = x;
     position.y = y;
 }
+
+@override
+  void update(double dt) { //cuando se actualize
+    /*super.update(dt);
+    tAcum += dt;//tiempo acum
+    if (tAcum >= 0.5) { // cada medio segundo
+      audioPlayer.play(AssetSource('sounds/dice-sound.mp3'));
+      tAcum = 0;
+    }*/
+  }
+
+  @override
+  void onStart() {
+    
+    audioPlayer.setReleaseMode(ReleaseMode.loop);
+    audioPlayer.play(AssetSource('sounds/dice-sound.mp3'));
+  }
 
 }

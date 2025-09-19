@@ -27,7 +27,11 @@ class NombresScreen extends StatelessWidget {
           ),
           Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: Container(
+      child: 
+      Stack(
+        children: [
+
+      Container(
         constraints: const BoxConstraints(maxHeight: 400), // 👈 limite para el scroll
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -66,7 +70,19 @@ class NombresScreen extends StatelessWidget {
                         ),
           ],
         ),
-      ),
+      ),    
+           Positioned(
+            right: 0,
+            child: IconButton(
+              icon: const Icon(Icons.close),
+              onPressed: (){                
+                Get.toNamed('/', arguments: {//a la pantalla inicial      
+                });                
+              }, // o Navigator.pop(context)
+            ),
+        )
+      ]
+      )
     )
           ]
           )      

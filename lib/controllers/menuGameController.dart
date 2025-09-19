@@ -14,12 +14,14 @@ class MenuGameController extends GetxController {
     'Jugador 4'
   ];//lista de jugadores
   var inputsList = <TextEditingController>[].obs;
+  Rx<int> numTabla = 0.obs;
   @override
   void onInit() {
     super.onInit();
     cargarInputs();//inputs de los nombres de jugadores
     print('entro oninit MenuGameController');//ingresa una sola vez
   }
+  
   void cargarInputs(){
     // Ejemplo: inicializamos con 3 inputs vacíos
     for (int i = 0; i < jugadoresList.length; i++) {
@@ -48,9 +50,11 @@ class MenuGameController extends GetxController {
   void irboardscreen_action() {    
     
     print('jugadores a enviar $numJugadores');
+    print('numTabla a enviar ${numTabla.value}' );
     Get.toNamed('/board_screen', arguments: {
       'numJugadores': numJugadores.value,
-      'nombresList': jugadoresList
+      'nombresList': jugadoresList,
+      'numTabla':numTabla.value
     });
   }
 

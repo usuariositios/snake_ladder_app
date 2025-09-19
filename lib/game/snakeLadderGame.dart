@@ -112,7 +112,7 @@ List<Ficha> tempList =[];
   }
   Future<void> saltarFichaPorEscalera(List<Offset> posDestinoList,int numFicha) async {
     //ficha = fichaList[numFicha];//se asigna el numero de ficha para que salte
-    await fichaList[numFicha].saltarVariasPosiciones(posDestinoList);
+    await fichaList[numFicha].saltarVariasPosiciones(posDestinoList,vSubir:0.2,vBajar:0.1);
     print("termino escalera para mensaje");
     Get.find<Boardscreencontroller>().finalizaSaltosEscalera_action();
     

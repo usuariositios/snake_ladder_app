@@ -23,7 +23,10 @@ class OpcionesDialog extends StatelessWidget {
       child: Container(
         constraints: const BoxConstraints(maxHeight: 400), // 👈 limite para el scroll
         padding: const EdgeInsets.all(16),
-        child: Column(
+        child: 
+        
+        
+        Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             const SizedBox(height: 12),
@@ -72,7 +75,7 @@ class OpcionesDialog extends StatelessWidget {
           
             
           ],
-        ),
+        )
       ),
     );
   }

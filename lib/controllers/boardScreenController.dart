@@ -66,6 +66,7 @@ class Boardscreencontroller extends GetxController {
   Rx<String> pathFicha1 ="".obs;
   var loadingImage = true.obs;//para indicar que esta en loading para imagenes
   List<String> nombresList=[];//la lista de nombres de los jugadores
+  int numTabla = 0;//numero de tabla
 
 
 
@@ -92,13 +93,17 @@ class Boardscreencontroller extends GetxController {
     //Get.put(sgame);
     //sgame = Get.find<Snakeladdergame>();
     print("entro onInit Boardscreencontroller");
-    posEscalerasList.assignAll(await GameService.cargarPosLadder('assets/data/ladder_positions.json','1'));
-    posSerpientesList.assignAll(await GameService.cargarPosSnake('assets/data/snake_positions.json','1'));
+    
     preguntasList.assignAll(await GameService.cargarPreguntas('assets/data/preguntas_es.json'));
     preguntasList.shuffle();//desordenamos la lista de preguntas
     //iniciarFichas();
-
+   
     
+  }
+
+  Future<void> cargarPosiciones() async {
+    posEscalerasList.assignAll(await GameService.cargarPosLadder('assets/data/ladder_positions.json',numTabla.toString()));
+    posSerpientesList.assignAll(await GameService.cargarPosSnake('assets/data/snake_positions.json',numTabla.toString()));
     
   }
   void iniciarNombresFichas(){//se invoca desde flame game
@@ -201,7 +206,7 @@ class Boardscreencontroller extends GetxController {
               //deducir posicion del comic metodo invocado desde el sprite flame game
               print(' posicion ficha dx ${posMsjComic.value.dx} dy ${posMsjComic.value.dy}' );
               
-
+              await audioPlayer.play(AssetSource('sounds/mensaje.mp3'));
               mensajeComicList.add(preguntaFicha.value);
               
               rePosicionaFicha();
@@ -211,19 +216,21 @@ class Boardscreencontroller extends GetxController {
       
 
     }
-    void finalizaSaltosEscalera_action(){
+    void finalizaSaltosEscalera_action() async{
         //ya no hay mas que recorrer
         posMsjComic.value = mapPosCeldas[sgame.fichaList[numFicha.value].nroCeldaActual]!;//posicion del comic finalizando la animacion (en ficha actual)
         
+        await audioPlayer.play(AssetSource('sounds/mensaje.mp3'));
         //deducir posicion del comic metodo invocado desde el sprite flame game
         mensajeComicList.add(obtienePreguntaFicha());
         rePosicionaFicha();
         actNumFicha();
     }
-    void finalizarBajarPorSerpiente_action(){
+    void finalizarBajarPorSerpiente_action() async{
         //ya no hay mas que recorrer
         posMsjComic.value = mapPosCeldas[sgame.fichaList[numFicha.value].nroCeldaActual]!;//posicion del comic finalizando la animacion (en ficha actual)
         
+        await audioPlayer.play(AssetSource('sounds/mensaje.mp3'));
         //deducir posicion del comic metodo invocado desde el sprite flame game
         mensajeComicList.add(obtienePreguntaFicha());
         rePosicionaFicha();
