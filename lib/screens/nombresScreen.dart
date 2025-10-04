@@ -52,7 +52,7 @@ class NombresScreen extends StatelessWidget {
                       child: TextField(
                         controller: mController.inputsList[index],
                         decoration: InputDecoration(
-                          labelText: "Jugador ${index + 1}",
+                          labelText: "jugador".tr + "${index + 1}",
                           border: OutlineInputBorder(),
                         ),
                       ),
@@ -66,7 +66,7 @@ class NombresScreen extends StatelessWidget {
                               onPressed: () {
                                 mController.guardarNombres_action();
                               },
-                              child: const Text("Aceptar"),
+                              child: Text("aceptar".tr),
                         ),
           ],
         ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:snake_ladder_app/controllers/menuGameController.dart';
+import 'package:snake_ladder_app/widgets/widgets.dart';
 
 
 
@@ -16,7 +17,7 @@ class MenuScreen extends StatefulWidget {
 class _MenuScreenState extends State<MenuScreen> {
   //late AppLocalizations t;
   final mController = Get.put(MenuGameController());
-  
+  Widgets widgets = Widgets();//widgets externos
   late bool isDark;
 
   @override
@@ -41,11 +42,28 @@ class _MenuScreenState extends State<MenuScreen> {
             ],
           ),
         ),
-        child: Column(
+        child: 
+      Stack(
+          children: [
+              Positioned(
+              top: 30,
+              right: 20,
+              child: IconButton(
+                icon: const Icon(Icons.settings, size: 32),
+                color: Colors.white,
+                onPressed: () {
+                  widgets.configuracionDialog(context);
+                },
+              ),
+            ),
+        Center(
+              child:
+        Column(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // Logo del juego (centrado)
+            
             
             Image.asset(
                     'assets/images/snake_ladder.png',
@@ -66,7 +84,7 @@ class _MenuScreenState extends State<MenuScreen> {
                         mController.irmodosscreen_action();
                       },
                       child: Text(
-                        'empezar',
+                        'empezar'.tr,
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -88,7 +106,7 @@ class _MenuScreenState extends State<MenuScreen> {
                         // Navegar a pantalla de modos de juego
                       },
                       child: Text(
-                        'jugadores',
+                        'jugadores'.tr,
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -101,6 +119,9 @@ class _MenuScreenState extends State<MenuScreen> {
             
           ],
         ),
+        )
+          ])
+      
       ),
     );
   }

@@ -11,6 +11,7 @@ import 'package:snake_ladder_app/service/gameService.dart';
 import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:snake_ladder_app/widgets/opcionesDialog.dart';
+import 'package:snake_ladder_app/widgets/widgets.dart';
 
 
 
@@ -73,6 +74,8 @@ class Boardscreencontroller extends GetxController {
 
   late Snakeladdergame sgame;//se asigna cuando ya construye la vista widgets
   int numFichaBkp = 0;//copia del numero de ficha
+
+  Widgets widgets = Widgets();//widgets externos
 
   
 
@@ -138,9 +141,10 @@ class Boardscreencontroller extends GetxController {
       sgame.moverFichaAPosicion(mapPosCeldas[nroCelda]!.dx,mapPosCeldas[nroCelda]!.dy);
       
     }*/
+    
 
     void lanzar_action() async{
-      await audioPlayer.play(AssetSource('sounds/dice-sound.mp3'));
+      audioPlayer.play(AssetSource('sounds/dice-sound.mp3'));
 
       mensajeComicList.clear();//limpiar mensajes
       imagePathsList.shuffle();//desordenar las imagenes
@@ -155,6 +159,16 @@ class Boardscreencontroller extends GetxController {
           numTurnoDice.value = random.nextInt(6)+1; //numero randomico segun formula para el dice
           //numTurnoDice.value = 1;  // para que incremente de uno en uno
           print('numTurnoDice.value ${numTurnoDice.value}');
+          if(sgame.fichaList[numFicha.value].nroCeldaActual+numTurnoDice.value>100){//para no sobrepasar el 100
+            //sgame.fichaList[numFicha.value].nroCeldaActual = sgame.fichaList[numFicha.value].nroCeldaActual -1;//reducir en una celda
+            //numTurnoDice.value = 1;//ir al mismo lugar
+            posDestinoList = [];//resetear la lista de posiciones destino
+            posDestinoList.add(mapPosCeldas[sgame.fichaList[numFicha.value].nroCeldaActual]!); //saltar a la misma celda
+            Future.delayed(const Duration(seconds: 1), () {
+              sgame.saltarFichaAPosiciones(posDestinoList,numFicha.value);
+            });
+            return;
+          }
           posDestinoList = [];//resetear la lista de posiciones destino
           int  i=0;//variable para actualizar la posicion del dialogo
           for(i=sgame.fichaList[numFicha.value].nroCeldaActual+1;
@@ -197,6 +211,12 @@ class Boardscreencontroller extends GetxController {
             else if(curvSerpDestino.computeMetrics().isNotEmpty){//si tiene curvas para la serpiente
               await sgame.bajarFichaPorSerpiente(curvSerpDestino,numFicha.value);
             }else{
+
+              if(sgame.fichaList[numFicha.value].nroCeldaActual==100){ //verificacion ganador juego
+                Get.dialog(
+                widgets.ganadorPartidaDialog(sgame.fichaList[numFicha.value].nombre));//con el nombre del ganador
+                return;
+              }
               
               //ya no hay mas que recorrer
               preguntaFicha.value = obtienePreguntaFicha();
@@ -206,7 +226,7 @@ class Boardscreencontroller extends GetxController {
               //deducir posicion del comic metodo invocado desde el sprite flame game
               print(' posicion ficha dx ${posMsjComic.value.dx} dy ${posMsjComic.value.dy}' );
               
-              await audioPlayer.play(AssetSource('sounds/mensaje.mp3'));
+              audioPlayer.play(AssetSource('sounds/mensaje.mp3'));
               mensajeComicList.add(preguntaFicha.value);
               
               rePosicionaFicha();
@@ -217,25 +237,36 @@ class Boardscreencontroller extends GetxController {
 
     }
     void finalizaSaltosEscalera_action() async{
+        if(sgame.fichaList[numFicha.value].nroCeldaActual==100){ //verificacion ganador juego
+          Get.dialog(
+          widgets.ganadorPartidaDialog(sgame.fichaList[numFicha.value].nombre));//con el nombre del ganador
+          return;
+        } 
         //ya no hay mas que recorrer
         posMsjComic.value = mapPosCeldas[sgame.fichaList[numFicha.value].nroCeldaActual]!;//posicion del comic finalizando la animacion (en ficha actual)
         
-        await audioPlayer.play(AssetSource('sounds/mensaje.mp3'));
+        audioPlayer.play(AssetSource('sounds/mensaje.mp3'));
         //deducir posicion del comic metodo invocado desde el sprite flame game
         mensajeComicList.add(obtienePreguntaFicha());
-        rePosicionaFicha();
+        rePosicionaFicha();//reducir el tamaño si existen posiciones similares
         actNumFicha();
     }
     void finalizarBajarPorSerpiente_action() async{
+        if(sgame.fichaList[numFicha.value].nroCeldaActual==100){ //verificacion ganador juego
+          Get.dialog(
+          widgets.ganadorPartidaDialog(sgame.fichaList[numFicha.value].nombre));//con el nombre del ganador
+          return;
+        } 
         //ya no hay mas que recorrer
         posMsjComic.value = mapPosCeldas[sgame.fichaList[numFicha.value].nroCeldaActual]!;//posicion del comic finalizando la animacion (en ficha actual)
         
-        await audioPlayer.play(AssetSource('sounds/mensaje.mp3'));
+        audioPlayer.play(AssetSource('sounds/mensaje.mp3'));
         //deducir posicion del comic metodo invocado desde el sprite flame game
         mensajeComicList.add(obtienePreguntaFicha());
         rePosicionaFicha();
         actNumFicha();
     }
+    
     String obtienePreguntaFicha(){
       posPreguntaFicha ++;
       return preguntasList[posPreguntaFicha].pregunta!;

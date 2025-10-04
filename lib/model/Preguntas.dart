@@ -8,15 +8,13 @@ class Preguntas {
   Preguntas(
       {this.codPregunta,
       this.tituloPregunta,
-      this.pregunta,
-      this.nroTragos,
+      this.pregunta,      
       this.codCategoria});
 
   Preguntas.fromJson(Map<String, dynamic> json) {
     codPregunta = json['codPregunta'];
     tituloPregunta = json['tituloPregunta'];
-    pregunta = json['pregunta'];
-    nroTragos = json['nroTragos'];
+    pregunta = json['pregunta'];    
     codCategoria = json['codCategoria'];
   }
 
@@ -24,8 +22,7 @@ class Preguntas {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['codPregunta'] = this.codPregunta;
     data['tituloPregunta'] = this.tituloPregunta;
-    data['pregunta'] = this.pregunta;
-    data['nroTragos'] = this.nroTragos;
+    data['pregunta'] = this.pregunta;    
     data['codCategoria'] = this.codCategoria;
     return data;
   }

@@ -51,9 +51,9 @@ class JugadoresScreen extends StatelessWidget {
             ),          
             const SizedBox(height: 5),
             SelectorOpciones(
-              opciones: [( 2,'2 Jugadores'),
-                          ( 3,'3 Jugadores'),
-                          ( 4,'4 Jugadores'),],
+              opciones: [( 2,'2'+'jugadores'.tr),
+                          ( 3,'3'+'jugadores'.tr),
+                          ( 4,'4'+'jugadores'.tr),],
               onSeleccion: (valor) {
                 mController.numJugadores.value = valor;
               },
@@ -64,7 +64,7 @@ class JugadoresScreen extends StatelessWidget {
                               onPressed: () {
                                 mController.irboardscreen_action();
                               },
-                              child: const Text("Jugar"),
+                              child: Text('jugar'.tr),
                         ),
           ],
         ),

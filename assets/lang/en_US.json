@@ -1,0 +1,19 @@
+{
+    "titulo_app": "Snake Ladder Challenges",
+    "empezar": "Begin",
+    "jugadores": "Players",
+    "configuracion": "Settings",
+    "cerrar":"Close",
+    "tema":"Theme",
+    "idioma":"Languaje",
+    "aceptar":"Accept",
+    "2_jugadores":"2 Players",
+    "3_jugadores":"3 Players",
+    "4_jugadores":"4 Players",
+    "jugar":"Play",
+    "menu":"Menu",
+    "reintentar":"Retry",
+    "retornar":"Return",
+    "jugador":"Player",
+    "ganador":"Winner"
+  }

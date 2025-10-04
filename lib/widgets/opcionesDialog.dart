@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class OpcionesDialog extends StatelessWidget {
   
@@ -40,7 +41,7 @@ class OpcionesDialog extends StatelessWidget {
                               ),
               
                               onPressed: onMenu,
-                              label: const Text("Menu"),
+                              label: Text("menu".tr),
                               icon: Icon(Icons.menu),
                               
                         ),
@@ -55,7 +56,7 @@ class OpcionesDialog extends StatelessWidget {
                               iconAlignment: IconAlignment.start,
                               ),
                               onPressed: onReintentar,
-                              label: const Text("Reintentar"),
+                              label: Text("reintentar".tr),
                               icon:Icon(Icons.refresh)
                         ),
             const SizedBox(height: 12),
@@ -69,7 +70,7 @@ class OpcionesDialog extends StatelessWidget {
                               iconAlignment: IconAlignment.start,
                               ),
                               onPressed: onRetornar,
-                              label: const Text("Retornar"),
+                              label: Text("retornar".tr),
                               icon:Icon(Icons.play_arrow)
                         ),
           

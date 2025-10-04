@@ -23,33 +23,33 @@
     {"ubicIni":7,"ubicFin":45,"pasos":7}    
     ],
 "3":[
-    {"ubicIni":25,"ubicFin":4,"pasos":7},
-    {"ubicIni":46,"ubicFin":13,"pasos":3},
-    {"ubicIni":49,"ubicFin":33,"pasos":9},
-    {"ubicIni":63,"ubicFin":42,"pasos":21},
-    {"ubicIni":69,"ubicFin":51,"pasos":7},
-    {"ubicIni":81,"ubicFin":62,"pasos":5},
-    {"ubicIni":92,"ubicFin":74,"pasos":5}
+    {"ubicIni":74,"ubicFin":92,"pasos":7},
+    {"ubicIni":62,"ubicFin":81,"pasos":7},
+    {"ubicIni":42,"ubicFin":63,"pasos":8},
+    {"ubicIni":28,"ubicFin":70,"pasos":11},
+    {"ubicIni":13,"ubicFin":46,"pasos":9},
+    {"ubicIni":4,"ubicFin":25,"pasos":7}    
     ]
 ,
 "4":[
-    {"ubicIni":14,"ubicFin":6,"pasos":7},
-    {"ubicIni":18,"ubicFin":11,"pasos":3},
-    {"ubicIni":21,"ubicFin":17,"pasos":9},
-    {"ubicIni":28,"ubicFin":23,"pasos":21},
-    {"ubicIni":40,"ubicFin":35,"pasos":7},
-    {"ubicIni":51,"ubicFin":48,"pasos":5},
-    {"ubicIni":70,"ubicFin":77,"pasos":5}
+    {"ubicIni":72,"ubicFin":91,"pasos":7},
+    {"ubicIni":62,"ubicFin":81,"pasos":7},
+    {"ubicIni":28,"ubicFin":84,"pasos":21},
+    {"ubicIni":51,"ubicFin":67,"pasos":5},
+    {"ubicIni":21,"ubicFin":42,"pasos":7},
+    {"ubicIni":2,"ubicFin":37,"pasos":5},
+    {"ubicIni":9,"ubicFin":31,"pasos":5},
+    {"ubicIni":4,"ubicFin":15,"pasos":5}
     ]
 ,
 "5":[
-    {"ubicIni":21,"ubicFin":3,"pasos":7},
-    {"ubicIni":30,"ubicFin":8,"pasos":3},
-    {"ubicIni":54,"ubicFin":28,"pasos":9},
-    {"ubicIni":55,"ubicFin":36,"pasos":21},
-    {"ubicIni":72,"ubicFin":51,"pasos":7},
-    {"ubicIni":78,"ubicFin":63,"pasos":5},
-    {"ubicIni":91,"ubicFin":71,"pasos":5}
+    {"ubicIni":80,"ubicFin":98,"pasos":7},
+    {"ubicIni":71,"ubicFin":92,"pasos":5},
+    {"ubicIni":35,"ubicFin":84,"pasos":21},
+    {"ubicIni":48,"ubicFin":74,"pasos":5},
+    {"ubicIni":22,"ubicFin":41,"pasos":5},
+    {"ubicIni":12,"ubicFin":31,"pasos":5},
+    {"ubicIni":3,"ubicFin":24,"pasos":5}
     ]
 ,
 "6":[

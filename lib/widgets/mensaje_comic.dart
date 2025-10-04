@@ -22,6 +22,7 @@ class MensajeComic extends StatelessWidget {
     final screenAnc = MediaQuery.of(context).size.width;
     final screenAlt = MediaQuery.of(context).size.height;
     double posx = 0;
+    double posy = 0;
     bool conPiquIzquierda = true;
 
     //print('${offset.dx+100} $screenAnc');
@@ -32,6 +33,15 @@ class MensajeComic extends StatelessWidget {
       posx = offset.dx;//sino se mantiene normal
       conPiquIzquierda=true;
     }
+    //verificar la altura de arriba de board
+    //aqui se ubica segun las coordenadas convencionales por esa causa se realiza la resta offset tiene las ubicaciones reales del dispositivo
+    print(' comparacion y mensaje comic ${screenAlt} ${offset.dy} ${screenAlt-offset.dy} ${screenAlt*0.14}');
+    /*if(offset.dy<(screenAlt*0.14)){//dy viene de bajada
+      posy = screenAlt-offset.dy;//mas la altura de la ficha
+    }else{
+      posy = screenAlt-offset.dy; //bottom empieza de arriba hacia abajo para invertir restar la altura total - la posicion y
+    }*/
+    
     
 
     //offset.dx offset.dy
@@ -40,37 +50,38 @@ class MensajeComic extends StatelessWidget {
     Stack(
         clipBehavior: Clip.none,
         children: [
-    
-    Positioned(
-
-      left: posx,
-      bottom: screenAlt-offset.dy,//bottom empieza de arriba hacia abajo para invertir restar la altura total - la posicion y
-      child: 
-          Container(
-            width: screenAnc*0.4,//el 30% del ancho del screen total
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: color,
-              borderRadius: BorderRadius.circular(12),              
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black26,
-                  blurRadius: 4,
-                  offset: Offset(2, 2),
-                )
-              ],
-            ),
-            child: Text(
-              texto,
-              style: estiloTexto ??
-                  const TextStyle(
-                    fontSize: 16,
-                    fontFamily: 'Comic Sans MS', // Fuente estilo cómic (opcional)
-                    color: Colors.black87,
-                  ),
-            ),
-          )
-         ),           
+        
+        Positioned(
+          left: posx,
+          bottom: offset.dy>(screenAlt*0.14)?screenAlt-offset.dy:null ,//si no se redujo mucho colocar como bottom
+          top:offset.dy<(screenAlt*0.14)?0:null,//si ya se redujo mucho colocar como top + la altura de la ficha
+          child: 
+              Container(
+                width: screenAnc*0.4,//el 30% del ancho del screen total
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: color,
+                  borderRadius: BorderRadius.circular(12),              
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 4,
+                      offset: Offset(2, 2),
+                    )
+                  ],
+                ),
+                child: Text(
+                  texto,
+                  style: estiloTexto ??
+                      const TextStyle(
+                        fontSize: 16,
+                        fontFamily: 'Comic Sans MS', // Fuente estilo cómic (opcional)
+                        color: Colors.black87,
+                      ),
+                ),
+              )
+            )
+            ,
           Positioned(
             bottom: screenAlt-offset.dy-2,//bottom empieza de arriba hacia abajo para invertir restar la altura total - la posicion y
             left: offset.dx +7,//posicion referente a la ficha            

@@ -8,6 +8,7 @@ import 'package:snake_ladder_app/service/gameService.dart';
 import 'package:snake_ladder_app/widgets/mensaje_comic.dart';
 import 'package:snake_ladder_app/widgets/rebotaImage.dart';
 
+
 class BoardScreen extends StatelessWidget {
   final boardController = Get.put(Boardscreencontroller());
   final sgame = Snakeladdergame();
@@ -30,8 +31,9 @@ class BoardScreen extends StatelessWidget {
     boardController.sgame = sgame;//asignamos al controlador
     //boardController.iniciarNombresFichas();
     //aqui setear los valores al controlador board
-    final args = Get.arguments as Map<String, dynamic>;
+    
     try {
+      final args = Get.arguments as Map<String, dynamic>;
     
     boardController.numTotalFichas = args['numJugadores']; //entrega de variables enviadas el widget y guardar al controlador
     
@@ -40,6 +42,7 @@ class BoardScreen extends StatelessWidget {
       boardController.numTotalFichas=2;
     }
     try{
+      final args = Get.arguments as Map<String, dynamic>;
       
       boardController.nombresList = args['nombresList'];//tratar de obtener los nombres jugadores
     }catch(e){//puede llegar nulo al screen
@@ -54,6 +57,7 @@ class BoardScreen extends StatelessWidget {
       }
 
     try {
+      final args = Get.arguments as Map<String, dynamic>;
     
     boardController.numTabla = args['numTabla']; //entrega de variables enviadas el widget y guardar al controlador
     boardController.cargarPosiciones();//funcion asincrona para cargar posiciones despues de cargar el numero de tabla (la variable ya esta en el controlador)
@@ -62,6 +66,12 @@ class BoardScreen extends StatelessWidget {
       boardController.numTabla=0;
       boardController.cargarPosiciones();
     }
+    //precargar las imagenes del dice
+    
+    for (var path in boardController.imagePathsList) {
+        precacheImage(AssetImage(path), context);
+    }
+    
 
 
     
@@ -150,11 +160,11 @@ class BoardScreen extends StatelessWidget {
                       child:
                       Obx(() =>
                           Card(
-                              color:Colors.white,//si no es numero su numero se coloca negro
+                              
                               elevation: 1, // Sombra del card
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(7.0),
-                                side: BorderSide(color: Colors.black, width: 1.5), // Borde
+                                side: BorderSide( width: 1.5), // Borde
                               ),                        
                               child: 
                               Padding(
@@ -178,11 +188,11 @@ class BoardScreen extends StatelessWidget {
                                     SizedBox(width: screenAnc*0.01,),                                                                    
                                      Expanded(                                                                    
                                             child:Text(
-                                      boardController.nombreFicha0.value,
-                                      style: TextStyle(fontSize: 20,                                         
-                                        color: Colors.black),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis, // ...
+                                                boardController.nombreFicha0.value,
+                                                style: TextStyle(fontSize: 20,                                         
+                                                ),
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis, // ...
                                     ),
                                     ),
                                   
@@ -204,6 +214,14 @@ class BoardScreen extends StatelessWidget {
                           alignment: Alignment.center, 
                           children: [
                           
+                          Positioned(top:0,
+                          child:                             
+                            Container(
+                            width: screenAnc*0.2,
+                            height: screenAlt*0.14,
+                            color: Colors.white,
+                            ),
+                          ),
                           Image.asset(
                             boardController.imagePathsList[boardController.indiceDice.value],
                             width: screenAnc *0.2,
@@ -219,6 +237,7 @@ class BoardScreen extends StatelessWidget {
                             opacity: boardController.numTurnoDice>0?AlwaysStoppedAnimation(100):AlwaysStoppedAnimation(0.0),
                           ),
                           
+                          
 
                         ],
 
@@ -230,12 +249,11 @@ class BoardScreen extends StatelessWidget {
                       width: screenAnc*0.40,
                       child:
                       Obx(() =>
-                          Card(
-                              color: Colors.white,//si no es numero su numero se coloca negro
+                          Card(                              
                               elevation: 0, // Sombra del card
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(7.0),
-                                side: BorderSide(color: Colors.black, width: 1.5), // Borde
+                                side: BorderSide(width: 1.5), // Borde
                               ),                        
                               child: 
                               
@@ -259,11 +277,11 @@ class BoardScreen extends StatelessWidget {
                                             SizedBox(width: screenAnc*0.01,),
                                             Expanded(                                                                    
                                             child:Text(
-                                              boardController.nombreFicha1.value,
-                                              style: TextStyle(fontSize: 20,                                         
-                                                color: Colors.black),
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis, // ...
+                                                boardController.nombreFicha1.value,
+                                                style: TextStyle(fontSize: 20,                                         
+                                                  ),
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis, // ...
                                             ),),
                                           
                                           

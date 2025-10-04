@@ -22,6 +22,9 @@ class _GaleriaImageState extends State<GaleriaImage> {
     "assets/images/tabla_snake_ladder0.svg",
     "assets/images/tabla_snake_ladder1.svg",
     "assets/images/tabla_snake_ladder2.svg",
+    "assets/images/tabla_snake_ladder3.svg",
+    "assets/images/tabla_snake_ladder4.svg",
+    "assets/images/tabla_snake_ladder5.svg",
   ];
 
   void siguiente() {
@@ -64,11 +67,6 @@ class _GaleriaImageState extends State<GaleriaImage> {
           height: screenAlt*0.6,
           width: screenAnc*0.6,
         ),
-
-        
-
-        
-
         // Botones de navegación
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -84,14 +82,7 @@ class _GaleriaImageState extends State<GaleriaImage> {
             ),
           ],
         ),
-
-        const SizedBox(height: 5),
-
-        // Indicador de posición
-        Text(
-          "${currentIndex + 1} / ${imagenes.length}",
-          style: const TextStyle(fontSize: 16),
-        ),
+        
       ],
     );
   }
