@@ -6,7 +6,7 @@ import 'package:snake_ladder_app/widgets/galeriaImage.dart';
 import 'package:snake_ladder_app/widgets/selectorOpciones.dart';
 
 class JugadoresScreen extends StatelessWidget {
-  final mController = Get.put(MenuGameController());
+  final mController = Get.put(MenuGameController(),permanent: true);
   @override
   Widget build(BuildContext context) {
     

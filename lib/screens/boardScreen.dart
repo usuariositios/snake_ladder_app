@@ -10,7 +10,7 @@ import 'package:snake_ladder_app/widgets/rebotaImage.dart';
 
 
 class BoardScreen extends StatelessWidget {
-  final boardController = Get.put(Boardscreencontroller());
+  final boardController = Get.put(Boardscreencontroller(),permanent: true);
   final sgame = Snakeladdergame();
   
   
@@ -66,6 +66,20 @@ class BoardScreen extends StatelessWidget {
       boardController.numTabla=0;
       boardController.cargarPosiciones();
     }
+
+    try {
+      final args = Get.arguments as Map<String, dynamic>;
+    
+    boardController.idioma.value = args['idioma']; //entrega de variables enviadas el widget y guardar al controlador
+    boardController.cargarPreguntas(boardController.idioma.value);
+    } catch (e) {//puede llegar nulo al screen
+      e.printError();
+      boardController.idioma.value='en';
+      boardController.cargarPreguntas(boardController.idioma.value);      
+    }
+
+
+
     //precargar las imagenes del dice
     
     for (var path in boardController.imagePathsList) {
@@ -102,7 +116,7 @@ class BoardScreen extends StatelessWidget {
           
           
           // Mostrar las 100 casillas
-          GameWidget(game: sgame),
+          GameWidget(game: sgame,), //overlayBuilderMap: null,//para que se mantenga persistente
           
               ...boardController.mapPosCeldas.entries.map((entry) {
                 return Positioned(
@@ -206,7 +220,9 @@ class BoardScreen extends StatelessWidget {
                           ),
                       GestureDetector(
                         onTap: (){
-                          boardController.lanzar_action();
+                          if(boardController.enableLanzar.value ==true){
+                            boardController.lanzar_action();
+                          }                          
                         },
                         child:
                         Obx(() =>

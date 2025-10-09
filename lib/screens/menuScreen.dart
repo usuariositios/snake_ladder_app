@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:snake_ladder_app/controllers/menuGameController.dart';
 import 'package:snake_ladder_app/widgets/widgets.dart';
-
+import 'package:flutter_svg/flutter_svg.dart';
 
 
 
@@ -16,7 +16,7 @@ class MenuScreen extends StatefulWidget {
 
 class _MenuScreenState extends State<MenuScreen> {
   //late AppLocalizations t;
-  final mController = Get.put(MenuGameController());
+  final mController = Get.put(MenuGameController(),permanent: true);
   Widgets widgets = Widgets();//widgets externos
   late bool isDark;
 
@@ -63,14 +63,18 @@ class _MenuScreenState extends State<MenuScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // Logo del juego (centrado)
-            
-            
+            ClipRRect(
+            borderRadius: BorderRadius.circular(20.0),
+            child:
             Image.asset(
-                    'assets/images/snake_ladder.png',
+                    'assets/images/snake_ladder_icon.png',
                     width: screenAnc *0.3,
                     height: screenAnc *0.3,
+
                     
-                  ),
+                  ),),
+            
+           
                   SizedBox(height: screenAlt*0.1,),
             ElevatedButton(
                       style: ElevatedButton.styleFrom(

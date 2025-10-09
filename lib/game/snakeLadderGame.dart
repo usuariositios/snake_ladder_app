@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:snake_ladder_app/controllers/boardScreenController.dart';
 
 
-class Snakeladdergame extends FlameGame {
+class Snakeladdergame extends FlameGame {// with WidgetsBindingObserver para reaccionar a paused o resumed del smartphone
   
   //late Ficha ficha;//ficha individual
   
@@ -17,6 +17,18 @@ class Snakeladdergame extends FlameGame {
     'player_red.png',
     'player_green.png',    
   ]; 
+
+
+  /*@override
+  void lifecycleStateChange(AppLifecycleState state) {
+    super.lifecycleStateChange(state);
+    if (state == AppLifecycleState.paused) {
+      // Evitar que se pause
+      resumeEngine();
+    } else if (state == AppLifecycleState.resumed) {
+      resumeEngine();
+    }
+  }*/
 
   @override
   Future<void> onLoad() async {

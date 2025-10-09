@@ -64,7 +64,8 @@ class MenuGameController extends GetxController {
     Get.toNamed('/board_screen', arguments: {
       'numJugadores': numJugadores.value,
       'nombresList': jugadoresList,
-      'numTabla':numTabla.value
+      'numTabla':numTabla.value,
+      'idioma':idioma.value
     });
   }
 

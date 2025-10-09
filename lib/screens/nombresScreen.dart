@@ -5,7 +5,7 @@ import 'package:snake_ladder_app/controllers/menuGameController.dart';
 
 
 class NombresScreen extends StatelessWidget {
-  final mController = Get.put(MenuGameController());
+  final mController = Get.put(MenuGameController(),permanent: true);
   @override
   Widget build(BuildContext context) {
     

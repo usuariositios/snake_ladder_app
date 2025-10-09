@@ -21,7 +21,7 @@ class RebotaImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(RebotaImageController(),
-                              tag: tag);
+                              tag: tag,permanent: true);
 
     // sincronizamos con el indicador externo
     controller.isAnimating.value = play;

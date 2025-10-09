@@ -19,7 +19,7 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   MyApp({super.key});
-  final mController = Get.put(MenuGameController());
+  final mController = Get.put(MenuGameController(),permanent: true);
   
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
             translations: AppTranslations(),
             locale: Get.deviceLocale,//idioma inicial
             fallbackLocale: Locale('en','US'),
-            title: 'titulo_app'.tr,
+            title: 'Snakes and Ladders Challenges',
             theme: ThemeData.light(),   // Tema claro
             darkTheme: ThemeData.dark(),// Tema oscuro
             home: MenuScreen(),

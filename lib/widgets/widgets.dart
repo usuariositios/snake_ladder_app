@@ -11,7 +11,7 @@ class Widgets{
     showDialog(
       context: context,
       builder: (BuildContext context) {
-              final mController = Get.put(MenuGameController());
+              final mController = Get.put(MenuGameController(),permanent: true);
               final theme = Theme.of(context);
               final defaultHoverColor = theme.colorScheme.primary.withOpacity(0.04);
 

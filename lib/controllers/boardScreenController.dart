@@ -76,6 +76,9 @@ class Boardscreencontroller extends GetxController {
   int numFichaBkp = 0;//copia del numero de ficha
 
   Widgets widgets = Widgets();//widgets externos
+  Rx<bool> enableLanzar = true.obs;//enable lanzar el dice
+  Rx<String> idioma = "es".obs;
+  
 
   
 
@@ -92,16 +95,20 @@ class Boardscreencontroller extends GetxController {
 
 
   @override
-  void onInit() async {
+  void onInit() async {//ingresa una sola vez
     //Get.put(sgame);
     //sgame = Get.find<Snakeladdergame>();
     print("entro onInit Boardscreencontroller");
     
-    preguntasList.assignAll(await GameService.cargarPreguntas('assets/data/preguntas_es.json'));
-    preguntasList.shuffle();//desordenamos la lista de preguntas
+    
     //iniciarFichas();
    
     
+  }
+
+  Future <void> cargarPreguntas(String idioma) async{
+    preguntasList.assignAll(await GameService.cargarPreguntas('assets/data/preguntas_$idioma.json'));
+    preguntasList.shuffle();//desordenamos la lista de preguntas
   }
 
   Future<void> cargarPosiciones() async {
@@ -144,6 +151,7 @@ class Boardscreencontroller extends GetxController {
     
 
     void lanzar_action() async{
+      enableLanzar.value = false;
       audioPlayer.play(AssetSource('sounds/dice-sound.mp3'));
 
       mensajeComicList.clear();//limpiar mensajes
@@ -231,6 +239,7 @@ class Boardscreencontroller extends GetxController {
               
               rePosicionaFicha();
               actNumFicha();
+              enableLanzar.value = true;
             }
             
       
@@ -250,6 +259,7 @@ class Boardscreencontroller extends GetxController {
         mensajeComicList.add(obtienePreguntaFicha());
         rePosicionaFicha();//reducir el tamaño si existen posiciones similares
         actNumFicha();
+        enableLanzar.value = true;
     }
     void finalizarBajarPorSerpiente_action() async{
         if(sgame.fichaList[numFicha.value].nroCeldaActual==100){ //verificacion ganador juego
@@ -265,6 +275,7 @@ class Boardscreencontroller extends GetxController {
         mensajeComicList.add(obtienePreguntaFicha());
         rePosicionaFicha();
         actNumFicha();
+        enableLanzar.value = true;
     }
     
     String obtienePreguntaFicha(){
