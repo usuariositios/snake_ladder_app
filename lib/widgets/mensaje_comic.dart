@@ -87,11 +87,13 @@ class MensajeComic extends StatelessWidget {
             left: offset.dx +7,//posicion referente a la ficha            
             child: Transform.rotate(
               angle: 45 * pi / 180,
-              child: Container(
+              child: Opacity(
+                opacity: offset.dy<(screenAlt*0.14)?0:1,//si ya redujo mucho no mostrar el pico
+                child:Container(
                 width: 12,
                 height: 12,
                 color: color,
-              ),
+              )),
             ),
           ),
         ],
