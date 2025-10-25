@@ -7,13 +7,17 @@ import 'package:snake_ladder_app/screens/menuScreen.dart';
 import 'package:snake_ladder_app/screens/jugadoresScreen.dart';
 import 'package:snake_ladder_app/screens/nombresScreen.dart';
 import 'package:snake_ladder_app/util/AppTranslations';
-
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await AppTranslations.load();//cargar traducciones antes de correr la app
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive); // pantalla completa
 
+   if (!kIsWeb) {
+    await MobileAds.instance.initialize(); // AdMob
+   }
   runApp(MyApp());//para que tenga un context);
 }
 

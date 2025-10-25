@@ -12,6 +12,8 @@ import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:snake_ladder_app/widgets/opcionesDialog.dart';
 import 'package:snake_ladder_app/widgets/widgets.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+
 
 
 
@@ -68,6 +70,34 @@ class Boardscreencontroller extends GetxController {
   var loadingImage = true.obs;//para indicar que esta en loading para imagenes
   List<String> nombresList=[];//la lista de nombres de los jugadores
   int numTabla = 0;//numero de tabla
+  Rx<BannerAd?> bannerAd = Rx<BannerAd?>(null);//banner admob
+  RxBool isLoaded = false.obs;//banner
+
+  void initAdMob() async {
+    await MobileAds.instance.initialize();
+  }
+
+  void loadBanner() {
+    bannerAd = Rx<BannerAd?>(null);//era esta variable reiniciarla desde la interfaz
+    final ad = BannerAd(
+      adUnitId: 'ca-app-pub-3940256099942544/6300978111', // id de la publicidad
+      size: AdSize.banner,
+      request: const AdRequest(),
+      listener: BannerAdListener(
+        onAdLoaded: (ad) {          
+          bannerAd.value = ad as BannerAd;
+          isLoaded.value = true;
+
+        },
+        onAdFailedToLoad: (ad, error) {
+          ad.dispose();
+          isLoaded.value = false;
+          print('Error al cargar el banner: ${error.message}');
+        },
+      ),
+    );
+    ad.load();
+  }
 
 
 
@@ -100,11 +130,14 @@ class Boardscreencontroller extends GetxController {
     //sgame = Get.find<Snakeladdergame>();
     print("entro onInit Boardscreencontroller");
     
+    initAdMob();//un solo intento carga
+    //_loadBanner();
     
     //iniciarFichas();
    
     
   }
+
 
   Future <void> cargarPreguntas(String idioma) async{
     preguntasList.assignAll(await GameService.cargarPreguntas('assets/data/preguntas_$idioma.json'));
@@ -404,8 +437,16 @@ class Boardscreencontroller extends GetxController {
     @override
       void onClose() {
         //_timerDuracionDice.cancel();
+        bannerAd.value?.dispose();
         super.onClose();
       }
+
+    @override
+  void dispose() {
+    // TODO: implement dispose
+    bannerAd.value?.dispose();
+    super.dispose();
+  }
     
 
   

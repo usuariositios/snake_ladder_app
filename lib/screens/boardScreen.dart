@@ -7,6 +7,7 @@ import 'package:flame/game.dart';
 import 'package:snake_ladder_app/service/gameService.dart';
 import 'package:snake_ladder_app/widgets/mensaje_comic.dart';
 import 'package:snake_ladder_app/widgets/rebotaImage.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 
 class BoardScreen extends StatelessWidget {
@@ -86,8 +87,10 @@ class BoardScreen extends StatelessWidget {
         precacheImage(AssetImage(path), context);
     }
     
+    boardController.loadBanner();
 
 
+    
     
     
     
@@ -100,7 +103,7 @@ class BoardScreen extends StatelessWidget {
         children: [
           
           
-          // Imagen SVG de fondo
+          // Imagen SVG de fondo 100% x 100%
           Positioned.fill(
             
             child: SvgPicture.asset(
@@ -313,6 +316,22 @@ class BoardScreen extends StatelessWidget {
         )
 
           ),
+            Positioned(
+            top: 0,
+            child: 
+             Obx(() =>
+             
+              !boardController.isLoaded.value || boardController.bannerAd.value == null
+                ? SizedBox(height: screenAlt*0.14)
+                :Container(
+                alignment: Alignment.center,
+                width: screenAnc , //boardController.bannerAd.value!.size.width.toDouble()
+                height: boardController.bannerAd.value!.size.height.toDouble(),
+                child: AdWidget(ad: boardController.bannerAd.value!),
+                )
+
+          ),
+          )
         
 
           
