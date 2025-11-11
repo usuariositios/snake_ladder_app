@@ -54,7 +54,7 @@ class MensajeComic extends StatelessWidget {
         Positioned(
           left: posx,
           bottom: offset.dy>(screenAlt*0.14)?screenAlt-offset.dy:null ,//si no se redujo mucho colocar como bottom
-          top:offset.dy<(screenAlt*0.14)?0:null,//si ya se redujo mucho colocar como top + la altura de la ficha
+          top:offset.dy<(screenAlt*0.14)?offset.dy+49:null,//si ya se redujo mucho colocar como top + la altura de la ficha + la altura de la ficha
           child: 
               Container(
                 width: screenAnc*0.4,//el 30% del ancho del screen total

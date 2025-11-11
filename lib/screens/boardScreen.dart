@@ -49,10 +49,10 @@ class BoardScreen extends StatelessWidget {
     }catch(e){//puede llegar nulo al screen
       e.printError();
       boardController.nombresList=[//nombres de jugadores
-    'Jugador 1',
-    'Jugador 2',
-    'Jugador 3',
-    'Jugador 4'
+    '${'jugador'.tr} 1',
+    '${'jugador'.tr} 2',
+    '${'jugador'.tr} 3',
+    '${'jugador'.tr} 4'
         ];
 
       }
@@ -201,6 +201,12 @@ class BoardScreen extends StatelessWidget {
                                         play: (boardController.numFicha.value==0 || boardController.numFicha.value==2)? true:false, // control desde afuera
                                         tag:'foto0'
                                       ):CircularProgressIndicator(),
+                                    boardController.numFicha.value==0 || boardController.numFicha.value==2?
+                                          Image.asset(
+                                            'assets/images/green_ball.png',
+                                            height: screenAlt*0.03,
+                                            width: screenAnc*0.03,
+                                          ):Text(''),
                                     
                                     SizedBox(width: screenAnc*0.01,),                                                                    
                                      Expanded(                                                                    
@@ -292,9 +298,14 @@ class BoardScreen extends StatelessWidget {
                                                 play: boardController.numFicha.value==1 || boardController.numFicha.value==3? true:false, // control desde afuera
                                                 tag:'foto1'
                                               ):CircularProgressIndicator(),
-
+                                            boardController.numFicha.value==1 || boardController.numFicha.value==3?                                            
+                                            Image.asset(
+                                              'assets/images/green_ball.png',
+                                              height: screenAlt*0.03,
+                                              width: screenAnc*0.03,
+                                            ):Text(''),                                                                                        
                                             SizedBox(width: screenAnc*0.01,),
-                                            Expanded(                                                                    
+                                            Expanded(
                                             child:Text(
                                                 boardController.nombreFicha1.value,
                                                 style: TextStyle(fontSize: 20,                                         
@@ -316,7 +327,7 @@ class BoardScreen extends StatelessWidget {
         )
 
           ),
-            Positioned(
+            /*Positioned(
             top: 0,
             child: 
              Obx(() =>
@@ -331,7 +342,7 @@ class BoardScreen extends StatelessWidget {
                 )
 
           ),
-          )
+          )*/
         
 
           

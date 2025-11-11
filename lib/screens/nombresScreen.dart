@@ -6,8 +6,10 @@ import 'package:snake_ladder_app/controllers/menuGameController.dart';
 
 class NombresScreen extends StatelessWidget {
   final mController = Get.put(MenuGameController(),permanent: true);
+
   @override
   Widget build(BuildContext context) {
+    mController.cargarInputs();
     
 
     return Scaffold(
@@ -43,23 +45,25 @@ class NombresScreen extends StatelessWidget {
             const SizedBox(height: 12),
             Expanded(
               child:
-            Obx(() {
-                return ListView.builder(
+            
+                
+                ListView.builder(
                   itemCount: mController.inputsList.length,
                   itemBuilder: (context, index) {
+                    mController.inputsList[index].text = mController.inputsList[index].text.replaceAll('jugador', 'jugador'.tr); //traduccion
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: TextField(
+                      child: TextField(//inputtext
                         controller: mController.inputsList[index],
                         decoration: InputDecoration(
-                          labelText: "jugador".tr + "${index + 1}",
+                          labelText: "jugador".tr + " ${index + 1}",
                           border: OutlineInputBorder(),
                         ),
                       ),
                     );
                   },
-                );
-              })
+                )
+              
             ),
             const SizedBox(height: 12),
                         ElevatedButton(

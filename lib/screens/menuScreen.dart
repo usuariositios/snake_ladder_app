@@ -17,6 +17,10 @@ class MenuScreen extends StatefulWidget {
 class _MenuScreenState extends State<MenuScreen> {
   //late AppLocalizations t;
   final mController = Get.put(MenuGameController(),permanent: true);
+
+  
+
+
   Widgets widgets = Widgets();//widgets externos
   late bool isDark;
 
@@ -26,6 +30,8 @@ class _MenuScreenState extends State<MenuScreen> {
     //isDark = themeNotifier.value == ThemeMode.dark;
     final screenAnc = MediaQuery.of(context).size.width;
     final screenAlt = MediaQuery.of(context).size.height;
+
+    mController.cargarJugadores();//nombres de jugadores
   
 
     return Scaffold(

@@ -13,7 +13,7 @@ class RebotaImageController extends GetxController with GetSingleTickerProviderS
 
     animationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 200),
+      duration: const Duration(milliseconds: 200),//duracion de la animacion
     );
 
     animation = Tween<double>(begin: -9, end: 0).animate(

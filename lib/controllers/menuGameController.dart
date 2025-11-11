@@ -12,33 +12,44 @@ class MenuGameController extends GetxController {
   var nombreJugador = ''.obs;
   Rx<int> numJugadores = 2.obs;
   List<String> jugadoresList=[//nombres de jugadores
-    'Jugador 1',
-    'Jugador 2',
-    'Jugador 3',
-    'Jugador 4'
+    '${'jugador'.tr} 1',
+    '${'jugador'.tr} 2',
+    '${'jugador'.tr} 3',
+    '${'jugador'.tr} 4'
   ];//lista de jugadores
-  var inputsList = <TextEditingController>[].obs;
+  var inputsList = <TextEditingController>[];
   Rx<int> numTabla = 0.obs;
   var themeMode = ThemeMode.light.obs;
   
   @override
   void onInit() {
     super.onInit();
-    cargarInputs();//inputs de los nombres de jugadores
+    
     print('entro oninit MenuGameController');//ingresa una sola vez
     var locale = Get.deviceLocale;
     print(locale!.languageCode);
     idioma.value = locale!.languageCode;
+    //cargarInputs();//inputs de los nombres de jugadores
     
   }
   
   void cargarInputs(){
+    inputsList=[];
     // Ejemplo: inicializamos con 3 inputs vacíos
     for (int i = 0; i < jugadoresList.length; i++) {
       TextEditingController t = TextEditingController();
       t.text = jugadoresList[i];
       inputsList.add(t);
     }
+
+  }
+  void cargarJugadores(){
+    jugadoresList=[//nombres de jugadores
+    '${'jugador'.tr} 1',
+    '${'jugador'.tr} 2',
+    '${'jugador'.tr} 3',
+    '${'jugador'.tr} 4'
+  ];//lista de jugadores
 
   }
 
@@ -57,7 +68,7 @@ class MenuGameController extends GetxController {
 
   
 
-  void irboardscreen_action() {    
+  void irboardscreen_action() {        
     
     print('jugadores a enviar $numJugadores');
     print('numTabla a enviar ${numTabla.value}' );

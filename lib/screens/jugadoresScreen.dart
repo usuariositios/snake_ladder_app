@@ -51,9 +51,9 @@ class JugadoresScreen extends StatelessWidget {
             ),          
             const SizedBox(height: 5),
             SelectorOpciones(
-              opciones: [( 2,'2'+'jugadores'.tr),
-                          ( 3,'3'+'jugadores'.tr),
-                          ( 4,'4'+'jugadores'.tr),],
+              opciones: [( 2,'2 '+'jugadores'.tr),
+                          ( 3,'3 '+'jugadores'.tr),
+                          ( 4,'4 '+'jugadores'.tr),],
               onSeleccion: (valor) {
                 mController.numJugadores.value = valor;
               },
