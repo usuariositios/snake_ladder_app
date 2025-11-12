@@ -327,7 +327,7 @@ class BoardScreen extends StatelessWidget {
         )
 
           ),
-            /*Positioned(
+            Positioned(
             top: 0,
             child: 
              Obx(() =>
@@ -342,7 +342,7 @@ class BoardScreen extends StatelessWidget {
                 )
 
           ),
-          )*/
+          )
         
 
           
