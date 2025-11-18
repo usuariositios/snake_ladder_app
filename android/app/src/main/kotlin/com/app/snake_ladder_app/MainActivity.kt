@@ -1,4 +1,4 @@
-package com.example.snake_ladder_app
+package com.app.snake_ladder_app
 
 import io.flutter.embedding.android.FlutterActivity
 

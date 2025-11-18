@@ -19,7 +19,7 @@ android {
     namespace = "com.app.snake_ladder_app"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = "27.0.12077973"
-    //ndkVersion = flutter.ndkVersion
+    //ndkVersion = flutter.ndkVersion verificar con la ubicacion
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -40,6 +40,13 @@ android {
         versionCode = flutter.versionCode
         versionName = flutter.versionName
         multiDexEnabled = true
+        ndk {
+            // Reemplaza tus líneas actuales por estas 4 líneas:
+            abiFilters.add("armeabi-v7a")
+            abiFilters.add("arm64-v8a")
+            abiFilters.add("x86")
+            abiFilters.add("x86_64")
+        }
     }
 
     signingConfigs{
@@ -65,8 +72,16 @@ android {
 
         }
     }
+    dexOptions {
+        //para no crear varios .class
+        jumboMode = true
+    }
 }
 
 flutter {
     source = "../.."
+}
+
+dependencies {
+    implementation("androidx.multidex:multidex:2.0.1")
 }
