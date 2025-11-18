@@ -31,7 +31,7 @@ class _MenuScreenState extends State<MenuScreen> {
     final screenAnc = MediaQuery.of(context).size.width;
     final screenAlt = MediaQuery.of(context).size.height;
 
-    mController.cargarJugadores();//nombres de jugadores
+    //mController.cargarJugadores();//nombres de jugadores
   
 
     return Scaffold(

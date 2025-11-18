@@ -74,7 +74,7 @@ class MenuGameController extends GetxController {
     print('numTabla a enviar ${numTabla.value}' );
     Get.toNamed('/board_screen', arguments: {
       'numJugadores': numJugadores.value,
-      'nombresList': jugadoresList,
+      'nombresList': jugadoresList,//se envia la lista de jugadores
       'numTabla':numTabla.value,
       'idioma':idioma.value
     });
